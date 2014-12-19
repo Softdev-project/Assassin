@@ -1,0 +1,32 @@
+/*
+var showposition = function(p){
+    var x = document.getElementById("demo");
+    x.innerHTML = "Lat: "+p.coords.latitude+"<br>Long: "+p.coords.longitude+"<br>Alt: " + p.coords.altitude;
+}
+
+*/
+var go = function() {
+    if ("geolocation" in navigator){
+	console.log("Geolocation");
+	navigator.geolocation.getCurrentPosition(initialize);
+    } else {
+	console.log("No Geolocation");
+    }
+}
+
+function initialize(p) {
+    console.log(p);
+    var mapOptions = {
+	if (navigator.geolocation){
+	    navigator.geolocation.getCurrentPosition(function(position){
+		console.log("help im stuck in a code factory");
+	    };
+						     
+	    else{
+		center: { lat: p.coords.latitude, lng: p.coords.longitude},
+		zoom: 8
+	}
+    var map = new google.maps.Map(document.getElementById('map-canvas'),
+				  mapOptions);
+}
+google.maps.event.addDomListener(window, 'load', initialize);
