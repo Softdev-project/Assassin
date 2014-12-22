@@ -5,12 +5,15 @@ Members: Jason Lu, Nathaniel Brassell, Vanessa Yan
 
 Changelog
 ---------
+v0.01
+* Server is up! Runs at http://104.236.107.63:8000/
+
 v0.0
 * made repo (12/18)
 
 Timeline
 --------
-12/21 - Get Droplet up, set up server (Nathaniel)
+12/21 - Get Droplet up, set up server (Nathaniel) (DONE)
 
 Christmas Break - College Stuff
 
