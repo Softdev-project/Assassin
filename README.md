@@ -5,11 +5,16 @@ Members: Jason Lu, Nathaniel Brassell, Vanessa Yan
 
 Changelog
 ---------
+v0.0-1
+* Server no bueno no mo' (we were apparently waging war against other servers)
+* submitted a ticket. no responce
+
 v0.01
 * Server is up! Runs at http://104.236.107.63:8000/
 
 v0.0
 * made repo (12/18)
+ 
 
 Timeline
 --------
