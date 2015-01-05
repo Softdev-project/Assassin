@@ -1,3 +1,4 @@
+
 var showposition = function(p){
     var x = document.getElementById("demo");
     x.innerHTML = "Lat: "+p.coords.latitude+"<br>Long: "+p.coords.longitude+"<br>Alt: " + p.coords.altitude;
@@ -13,3 +14,4 @@ var go = function() {
 }
 
 //DO THING WITH THE ONLOAD THING HELP PLS THANKA
+window.onLoad = go;
