@@ -5,6 +5,9 @@ Members: Jason Lu, Nathaniel Brassell, Vanessa Yan
 
 Changelog
 ---------
+v0.-1
+* First droplet deleted, new one made.
+
 v0.0-1
 * Server no bueno no mo' (we were apparently waging war against other servers)
 * submitted a ticket. no responce
