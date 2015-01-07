@@ -5,7 +5,10 @@ Members: Jason Lu, Nathaniel Brassell, Vanessa Yan
 
 Changelog
 ---------
-v0.-1
+v0.11
+* Domain registered & added nginx to box
+
+v0.10
 * First droplet deleted, new one made.
 
 v0.0-1
