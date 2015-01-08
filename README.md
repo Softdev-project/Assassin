@@ -7,6 +7,7 @@ Changelog
 ---------
 v0.11
 * Domain registered & added nginx to box
+* http://help.wtf.im/
 
 v0.10
 * First droplet deleted, new one made.
