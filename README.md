@@ -5,6 +5,10 @@ Members: Jason Lu, Nathaniel Brassell, Vanessa Yan
 
 Changelog
 ---------
+
+v0.2
+* made site to show map with Google API but not on droplet yet. 
+
 v0.11
 * Domain registered & added nginx to box
 * http://help.wtf.im/
