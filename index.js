@@ -1,17 +1,34 @@
+var myPos;
+var map;
+function initialize() {    
+    var mapOptions = {
+	zoom: 20	
+    };
+    map = new google.maps.Map(document.getElementById('map-canvas'),
+				  mapOptions);
+    
+    if(navigator.geolocation) {
+	browserSupportFlag = true;
+	navigator.geolocation.getCurrentPosition(function(position) {
+	    initialLocation = new google.maps.LatLng(position.coords.latitude,position.coords.longitude);
+	    myPos = initialLocation;
+	    map.setCenter(initialLocation);
+	}, function() {
+	    handleNoGeolocation(browserSupportFlag);
+	});
+    }
 
-var showposition = function(p){
-    var x = document.getElementById("demo");
-    x.innerHTML = "Lat: "+p.coords.latitude+"<br>Long: "+p.coords.longitude+"<br>Alt: " + p.coords.altitude;
-}
-
-var go = function() {
-    if ("geolocation" in navigator){
-	console.log("Geolocation");
-	navigator.geolocation.getCurrentPosition(initialize);
-    } else {
-	console.log("No Geolocation");
+    else {
+	browserSupportFlag = false;
+	handleNoGeolocation(browserSupportFlag);
     }
 }
 
-//DO THING WITH THE ONLOAD THING HELP PLS THANKA
-window.onLoad = go;
+var marker = new google.maps.Marker({
+    position: myPos,
+    map: map,
+    title:"Hello World!"
+});
+
+google.maps.event.addDomListener(window, 'load', initialize);
+marker.setMap(map);
