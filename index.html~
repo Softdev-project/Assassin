@@ -1,3 +1,4 @@
+<!--
 <!DOCTYPE html>
 <html>
   <head>
@@ -6,14 +7,27 @@
     <div id="demo">
       Hello
     </div>
+    <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAO3EAgnxm_xkXlf8kccYlLdMYoo0-Vefs">
+    </script>
     <script src="index.js">
     </script>
-    <iframe
-       width="600"
-       height="450"
-       frameborder="0" style="border:0"
-       src="https://www.google.com/maps/embed/v1/place?key=API_KEY
-	    &q=Space+Needle,Seattle+WA">
-</iframe>
+    <div id="map-canvas"></div>
   </body>  
+</html>
+-->
+<!DOCTYPE html>
+<html>
+  <head>
+    <style type="text/css">
+      html, body, #map-canvas { height: 100%; margin: 0; padding: 0;}
+    </style>
+    <script type="text/javascript"
+	    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAO3EAgnxm_xkXlf8kccYlLdMYoo0-Vefs">
+    </script>
+    <script src="index.js">
+    </script>
+  </head>
+  <body>
+<div id="map-canvas"></div>
+  </body>
 </html>

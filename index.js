@@ -1,18 +1,17 @@
 var myPos;
 var map;
-function initialize() {    
+
+function initialize(){
     var mapOptions = {
-	zoom: 20	
+	zoom: 15	
     };
     map = new google.maps.Map(document.getElementById('map-canvas'),
 				  mapOptions);
-    
     if(navigator.geolocation) {
 	browserSupportFlag = true;
 	navigator.geolocation.getCurrentPosition(function(position) {
-	    initialLocation = new google.maps.LatLng(position.coords.latitude,position.coords.longitude);
-	    myPos = initialLocation;
-	    map.setCenter(initialLocation);
+	    myPos = new google.maps.LatLng(position.coords.latitude,position.coords.longitude);
+	    map.setCenter(myPos);
 	}, function() {
 	    handleNoGeolocation(browserSupportFlag);
 	});
@@ -24,11 +23,14 @@ function initialize() {
     }
 }
 
+var myLatlng = new google.maps.LatLng(-25.363882,131.044922);
+
+// To add the marker to the map, use the 'map' property
 var marker = new google.maps.Marker({
-    position: myPos,
-    map: map,
+    position: myLatlng,
     title:"Hello World!"
 });
 
-google.maps.event.addDomListener(window, 'load', initialize);
 marker.setMap(map);
+
+google.maps.event.addDomListener(window, 'load', initialize);
