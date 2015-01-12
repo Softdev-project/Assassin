@@ -36,12 +36,13 @@ Timeline
 
 Christmas Break - College Stuff
 
-1/4 - Website with zoomable map, dot where user is (GMaps API)
+1/18 - Website with zoomable map, dot where user is (GMaps API) (Branch mapping)
 
-1/11 - Multi user on one map, detection when within x radius, kill button (within radius)
+1/18 - Display number of people and their geolocation coords (Branch multi?)
+
+TBD - Combinding the two branches (Take array from multi branch and displaying all markers on mapping)
 
 Onwards - tbd
-
 Instructions to Install
 -----------------------
 None so far?
