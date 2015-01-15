@@ -9,7 +9,15 @@ db = conn['1247']
 def restart():
     ##need counter for id
     db.usertable.drop()
-    tdic = {'user': 'user', 'uid':'00000', 'ulat':'0', 'ulong':'0', 'target':'target'}
+    tdic = {'user': 'user', 
+    'uid':'00000', 
+    'ulat':'0', 
+    'ulong':'0', 
+    'target':'target'
+    'tid':'00001',
+    'tlat':'0',
+    'tlong':'0'
+    'num_click':'0'}
     db.usertable.insert(tdic)   
 
 def printData():
