@@ -1,56 +1,54 @@
-/*
-var myPos;
-var map;
+var initialLocation;
+var siberia = new google.maps.LatLng(60, 105);
+var newyork = new google.maps.LatLng(40.69847032728747, -73.9514422416687);
+var browserSupportFlag =  new Boolean();
 
-function initialize(){
-    var mapOptions = {
-	zoom: 15	
+var init = function initialize() {
+    var myOptions = {
+	zoom: 6,
+	mapTypeId: google.maps.MapTypeId.ROADMAP
     };
-    map = new google.maps.Map(document.getElementById('map-canvas'),
-				  mapOptions);
+    var map = new google.maps.Map(document.getElementById("map-canvas"), myOptions);
+    
     if(navigator.geolocation) {
 	browserSupportFlag = true;
 	navigator.geolocation.getCurrentPosition(function(position) {
-	    myPos = new google.maps.LatLng(position.coords.latitude,position.coords.longitude);
-	    map.setCenter(myPos);
+	    initialLocation = new google.maps.LatLng(position.coords.latitude,position.coords.longitude);
+	    map.setCenter(initialLocation);
+	    
+	    var myLatlng = initialLocation;
+	    var myMarker = new google.maps.Marker({
+		position: myLatlng,
+		map: map,
+		title:"Hello World!"
+	    });
+
+	    var targetLatLng = new google.maps.LatLng(position.coords.latitude + 0.05, position.coords.longitude + 0.05);
+	    var targetMarker = new google.maps.Marker({
+		position: targetLatLng,
+		map: map,
+		title:"Hello World!"
+	    });
+	    
 	}, function() {
 	    handleNoGeolocation(browserSupportFlag);
 	});
     }
-
     else {
 	browserSupportFlag = false;
 	handleNoGeolocation(browserSupportFlag);
     }
+    
+    function handleNoGeolocation(errorFlag) {
+	if (errorFlag == true) {
+	    alert("Geolocation service failed.");
+	    initialLocation = newyork;
+	} else {
+	    alert("Your browser doesn't support geolocation. We've placed you in Siberia.");
+	    initialLocation = siberia;
+	}
+	map.setCenter(initialLocation);
+    }
 }
 
-var myLatlng = new google.maps.LatLng(-25.363882,131.044922);
-
-// To add the marker to the map, use the 'map' property
-var marker = new google.maps.Marker({
-    position: myLatlng,
-    map : map,
-    title:"Hello World!"
-});
-
-marker.setMap(map);
-
-google.maps.event.addDomListener(window, 'load', initialize);
-*/
-
-function initialize() {
-  var myLatlng = new google.maps.LatLng(-25.363882,131.044922);
-  var mapOptions = {
-    zoom: 4,
-    center: myLatlng
-  }
-  var map = new google.maps.Map(document.getElementById('map-canvas'), mapOptions);
-
-  var marker = new google.maps.Marker({
-      position: myLatlng,
-      map: map,
-      title: 'Hello World!'
-  });
-}
-
-google.maps.event.addDomListener(window, 'load', initialize);
+window.onLoad = init();
