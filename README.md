@@ -6,6 +6,25 @@ Assassin
 Leader: Jessica Ng
 Members: Jason Lu, Nathaniel Brassell, Vanessa Yan
 
+Jessica
+* Accounts
+* Mongodb
+* Flask
+* Ajax?
+
+Jason
+* Nginx
+* Server
+
+Nathaniel
+* Nginx
+* Server
+
+Vanessa
+* Mapping
+* Flask
+* Ajax?
+
 Changelog
 ---------
 
