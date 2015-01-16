@@ -28,6 +28,11 @@ Vanessa
 Changelog
 ---------
 
+V0.3
+* site shows map ON DROPLET WHOOO
+* also port 8888 is running a flask app fucking yes
+* still need to remove port ref but blehhh
+
 v0.2
 * made site to show map with Google API but not on droplet yet. 
 
