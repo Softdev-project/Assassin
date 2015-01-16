@@ -1,10 +1,43 @@
-Assassin
+Anathema
 ========
+Assassin
+--------
+
 Leader: Jessica Ng
 Members: Jason Lu, Nathaniel Brassell, Vanessa Yan
 
+Jessica
+* Accounts
+* Mongodb
+* Flask
+* Ajax?
+
+Jason
+* Nginx
+* Server
+
+Nathaniel
+* Nginx
+* Server
+
+Vanessa
+* Mapping
+* Flask
+* Ajax?
+
 Changelog
 ---------
+
+v0.2
+* made site to show map with Google API but not on droplet yet. 
+
+v0.11
+* Domain registered & added nginx to box
+* http://help.wtf.im/
+
+v0.10
+* First droplet deleted, new one made.
+
 v0.0-1
 * Server no bueno no mo' (we were apparently waging war against other servers)
 * submitted a ticket. no responce
@@ -22,12 +55,13 @@ Timeline
 
 Christmas Break - College Stuff
 
-1/4 - Website with zoomable map, dot where user is (GMaps API)
+1/18 - Website with zoomable map, dot where user is (GMaps API) (Branch mapping)
 
-1/11 - Multi user on one map, detection when within x radius, kill button (within radius)
+1/18 - Display number of people and their geolocation coords (Branch multi?)
+
+TBD - Combinding the two branches (Take array from multi branch and displaying all markers on mapping)
 
 Onwards - tbd
-
 Instructions to Install
 -----------------------
 None so far?
