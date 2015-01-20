@@ -15,10 +15,12 @@ Jessica
 Jason
 * Nginx
 * Server
+* Mongo/JavaScript connection
 
 Nathaniel
 * Nginx
 * Server
+* Mongo/Javascript connection
 
 Vanessa
 * Mapping
@@ -27,6 +29,9 @@ Vanessa
 
 Changelog
 ---------
+V0.4
+* Skeleton HTML site is on the html branch
+* Pull request for mapping to html
 
 V0.3
 * site shows map ON DROPLET WHOOO
