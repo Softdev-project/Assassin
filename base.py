@@ -9,7 +9,8 @@ db = conn['1247']
 def restart():
     ##need counter for id
     db.usertable.drop()
-    tdic = {'user': 'user', 
+    accounts = {'username': 'testing', 'password':'testing'}
+    data = {'user': 'user', 
     'uid':'00000', 
     'ulat':'0', 
     'ulong':'0', 
