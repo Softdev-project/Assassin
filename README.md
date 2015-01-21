@@ -29,34 +29,34 @@ Vanessa
 
 Changelog
 ---------
-V0.4
+V0.4 (1/20)
 * Skeleton HTML site is on the html branch
 * Pull request for mapping to html
 
-V0.3
+V0.3 (1/16)
 * site shows map ON DROPLET WHOOO
 * also port 8888 is running a flask app fucking yes
 * still need to remove port ref but blehhh
 
-v0.2
+v0.2 (1/8)
 * made site to show map with Google API but not on droplet yet. 
 
-v0.11
+v0.11 (1/7)
 * Domain registered & added nginx to box
 * http://help.wtf.im/
 
-v0.10
+v0.10 (1/6)
 * First droplet deleted, new one made.
 
-v0.0-1
+v0.0-1 (1/5)
 * Server no bueno no mo' (we were apparently waging war against other servers)
 * submitted a ticket. no responce
 
-v0.01
+v0.01 (12/22)
 * Server is up! Runs at http://104.236.107.63:8000/
 
-v0.0
-* made repo (12/18)
+v0.0 (12/18)
+* made repo 
  
 
 Timeline
