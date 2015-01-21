@@ -31,6 +31,7 @@ def index():
 
 #HAVE 'username' AND 'password' INPUTS
 @app.route('/login', methods=['GET', 'POST'])
+#CHANGE THIS THING
 @validate
 def login():
     #else:
