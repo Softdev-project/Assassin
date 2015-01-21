@@ -1,10 +1,7 @@
 import random
 from pymongo import Connection
-
 conn = Connection()
-
 db = conn['1247']
-
 
 def restart():
     ##need counter for id
@@ -12,10 +9,14 @@ def restart():
     db.datatable.drop()
     db.idtable.drop()
     ids = {'idnum':'2'}
-    accounts = {'username': 'test',
+    account1 = {'username': 'No1',
                 'userid': '0',
-                'password':'test'}
-    data = {'uid':'0', 
+                'password':'number1',}
+    account2 = {'username': 'No2',
+                'userid': '1',
+                'password':'number2',}
+    data = {'user':'user',
+    'uid':'0', 
     'ulat':'0', 
     'ulong':'0', 
     'target':'target',
@@ -23,11 +24,12 @@ def restart():
     'tlat':'0',
     'tlong':'0',
     'num_click':'0'}
-    db.usertable.insert(accounts)
+    db.usertable.insert(account1)
+    db.usertable.insert(account2)
     db.datatable.insert(data)
     db.idtable.insert(ids)
 
-def printData():
+def printUsers():
     cres = db.usertable.find()
     #{}, {'_id':False})
     #print cres
@@ -61,14 +63,13 @@ def validate(usernamei, passwordi):
     return False
 
 
-
-def addUser(usernamei, passwordi):
+def addUser(usernamei, passwordi,):
     cres = db.usertable.find({'username':usernamei})
     res = [r for r in cres]
     print res
     if len(res)>0:
         return False    
-    nu = {'username': usernamei, 'password':passwordi}
+    nu = {'username': usernamei, 'password':passwordi, 'userid':getNewID()}
     db.usertable.save(nu)
     return True
 
@@ -78,5 +79,8 @@ def updateUser(usernamei, passwordi, passwordn):
         db.usertable.update ({'username':usernamei, 'password':passwordi}, {"$set": {'username': usernamei, 'password':passwordn}})
         return True
     return False
-    
+
 restart()
+addUser("sdfsdf", "asf")
+addUser("sdfsdfsdfsd", "sdfsdfasdf")
+printUsers()
