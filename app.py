@@ -4,28 +4,28 @@ import base
 
 app = Flask(__name__)
 
-def validate(func):
-    @wraps(func)
-    def inner (*args, **kwargs):
-        error = None
-        if request.method == 'POST':
-            if base.validate (request.form['username'], request.form['password']):
-                session['username'] = request.form['username']
-                flash('You were successfully logged in')
-                return redirect(url_for('index'))
-            else:
-                error = "Invalid credentials"
-                return render_template ("login.html", error = error)
-        return func()
-    return inner
+#def validate(func):
+#    @wraps(func)
+#    def inner (*args, **kwargs):
+#        error = None
+#        if request.method == 'POST':
+#            if base.validate (request.form['username'], request.form['password']):
+#               session['username'] = request.form['username']
+#                flash('You were successfully logged in')
+#               return redirect(url_for('index'))
+#            else:
+#                error = "Invalid credentials"
+#                return render_template ("login.html", error = error)
+#        return func()
+#    return inner
 
 @app.route('/')
 def index():
-#    if 'username' in session:
-#        return render_template ("index.html", 
-#                                corner = escape(session['username']))
-#    else:
-#        return render_template ("index2.html")
+    #    if 'username' in session:
+    #        return render_template ("index.html", 
+    #                                corner = escape(session['username']))
+    #    else:
+    #        return render_template ("index2.html")
     return render_template ("index.html")
 
 
@@ -41,29 +41,42 @@ def login():
 def logout():
     # remove the username from the session if it's there
     session.pop('username', None)
-#    flash("You have logged out")
+    #    flash("You have logged out")
     return redirect(url_for('index'))
 
 @app.route('/register', methods=['GET', 'POST'])
 def register():
-#    error = None
-    if 'username' in session:
-#        flash("You are already logged in")
-        return redirect(url_for('index'))
-    elif request.method == 'POST':
-        if base.addUser (request.form['username'], request.form['password']):
+    #    error = None
+    #    if 'username' in session:
+    #        flash("You are already logged in")
+    #        return redirect(url_for('index'))
+    #error = None
+    #LOGIN SHIT
+    if request.method == 'POST':
+        if base.validate (request.form['username'], request.form['password']):
             session['username'] = request.form['username']
-            #flash ("You have successfully registered")
+            flash('You were successfully logged in')
             return redirect(url_for('index'))
         else:
-            #error = "That username is already taken"
-            return  render_template ("register.html"
-                                     #,error = error
-                                     )
+    #error = "Invalid credentials"
+            return render_template ("login.html"
+                                    #, error = error
+            )
+        #REGISTRATION SHIT
+elif request.method == 'POST':
+    if base.addUser (request.form['username'], request.form['password']):
+        session['username'] = request.form['username']
+        #flash ("You have successfully registered")
+        return redirect(url_for('index'))
+else:
+    #error = "That username is already taken"
+    return  render_template ("register.html"
+                             #,error = error
+    )
     else:
         return  render_template ("register.html"
                                  #, error = error
-                                 )
+        )
 
 #HAVE INPUTS FOR 'username' 'password' AND 'newpassword'
 @app.route('/settings', methods=['GET', 'POST'])
@@ -74,21 +87,21 @@ def settings():
             if base.updateUser (escape(session['username']), request.form['password'], request.form ['newpassword']):
                 #flash ("You have successfully changed your settings")
                 return redirect(url_for('index'))
-            else:
-                #error = "You have entered the wrong password"
-                return render_template ("settings.html"
-                                        #, 
+else:
+    #error = "You have entered the wrong password"
+    return render_template ("settings.html"
+                            #, 
                                         #corner = escape(session['username'])
                                         #, 
                                         #error = error
-                                        )
+    )
         else:
             return render_template ("settings.html"
-                                        #, 
+                                    #, 
                                         #corner = escape(session['username'])
                                         #, 
                                         #error = error
-                                        )
+            )
     else:
         return render_template ("error.html")
 
