@@ -60,19 +60,19 @@ def register():
         else:
     #error = "Invalid credentials"
             return render_template ("login.html"
-                                    #, error = error
-            )
-        #REGISTRATION SHIT
-elif request.method == 'POST':
-    if base.addUser (request.form['username'], request.form['password']):
-        session['username'] = request.form['username']
-        #flash ("You have successfully registered")
-        return redirect(url_for('index'))
-else:
-    #error = "That username is already taken"
-    return  render_template ("register.html"
-                             #,error = error
-    )
+                                #, error = error
+                                )
+            #REGISTRATION SHIT
+    elif request.method == 'POST':
+        if base.addUser (request.form['username'], request.form['password']):
+            session['username'] = request.form['username']
+            #flash ("You have successfully registered")
+            return redirect(url_for('index'))
+        else:
+            #error = "That username is already taken"
+            return  render_template ("register.html"
+                                     #,error = error
+                                 )
     else:
         return  render_template ("register.html"
                                  #, error = error
@@ -87,10 +87,10 @@ def settings():
             if base.updateUser (escape(session['username']), request.form['password'], request.form ['newpassword']):
                 #flash ("You have successfully changed your settings")
                 return redirect(url_for('index'))
-else:
-    #error = "You have entered the wrong password"
-    return render_template ("settings.html"
-                            #, 
+            else:
+                #error = "You have entered the wrong password"
+                return render_template ("settings.html"
+                                        #, 
                                         #corner = escape(session['username'])
                                         #, 
                                         #error = error
@@ -98,9 +98,9 @@ else:
         else:
             return render_template ("settings.html"
                                     #, 
-                                        #corner = escape(session['username'])
-                                        #, 
-                                        #error = error
+                                    #corner = escape(session['username'])
+                                    #, 
+                                    #error = error
             )
     else:
         return render_template ("error.html")

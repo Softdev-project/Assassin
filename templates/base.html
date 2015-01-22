@@ -9,6 +9,17 @@
     </title>
   </head>
   <body>
+    {% with messages = get_flashed_messages() %}
+    {% if messages %}
+    MESSAGES
+    <br>
+    <ul class=flashes>
+      {% for message in messages %}
+      <li>{{ message }}</li>
+      {% endfor %}
+    </ul>
+    {% endif %}
+    {% endwith %}
     {% block body %}
     JUNK BODY HERE THIS SHOULD NOT HAPPEN
     {% endblock %}
