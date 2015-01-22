@@ -32,7 +32,7 @@ def index():
 #HAVE 'username' AND 'password' INPUTS
 @app.route('/login', methods=['GET', 'POST'])
 #CHANGE THIS THING
-@validate
+#@validate
 def login():
     #else:
     return render_template ("login.html")
