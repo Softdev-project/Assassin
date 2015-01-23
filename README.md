@@ -79,4 +79,4 @@ look up Exo Arena (very similar)
 Game Mechanics (not set in stone rn)
 ------------------------------------
 * in certain radius, press button, everyone else in it dies
-* 
+* press button to get location, upload own latest
