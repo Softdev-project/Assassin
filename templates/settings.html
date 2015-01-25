@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+
+{% block title %}
+Settings
+{% endblock %}
+
+{% block body %}
+<form method="post">
+  New Password
+  <input type="text" placeholder="old password" name="oldpw">
+  <input type="text" placeholder="new password" name="newpw1">
+  <input type="text" placeholder="new password" name="newpw2">
+  <input type="submit" value="submit">
+</form>
+{% endblock %}

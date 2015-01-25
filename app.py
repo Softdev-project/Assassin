@@ -4,6 +4,7 @@ import base
 
 app = Flask(__name__)
 
+#NOT NEEDED? BASE ALREADY HAS A VALIDATE
 #def validate(func):
 #    @wraps(func)
 #    def inner (*args, **kwargs):
@@ -21,92 +22,77 @@ app = Flask(__name__)
 
 @app.route('/')
 def index():
-    #    if 'username' in session:
-    #        return render_template ("index.html", 
-    #                                corner = escape(session['username']))
-    #    else:
-    #        return render_template ("index2.html")
-    return render_template ("index.html")
+    username = "NOT LOGGED IN"
+    if 'username' in session:
+        username = "LOGGED IN AS " + escape(session['username'])
+    return render_template ("index.html", username = username)
 
-
-#HAVE 'username' AND 'password' INPUTS
-@app.route('/login', methods=['GET', 'POST'])
-#CHANGE THIS THING
-#@validate
-def login():
-    #else:
-    return render_template ("login.html")
 
 @app.route('/logout')
 def logout():
     # remove the username from the session if it's there
     session.pop('username', None)
-    #    flash("You have logged out")
+    flash("You have logged out")
     return redirect(url_for('index'))
 
-@app.route('/register', methods=['GET', 'POST'])
-def register():
-    #    error = None
-    #    if 'username' in session:
-    #        flash("You are already logged in")
-    #        return redirect(url_for('index'))
-    #error = None
-    #LOGIN SHIT
-    if request.method == 'POST':
-        if base.validate (request.form['username'], request.form['password']):
-            session['username'] = request.form['username']
-            flash('You were successfully logged in')
-            return redirect(url_for('index'))
-        else:
-    #error = "Invalid credentials"
-            return render_template ("login.html"
-                                #, error = error
-                                )
-            #REGISTRATION SHIT
-    elif request.method == 'POST':
-        if base.addUser (request.form['username'], request.form['password']):
-            session['username'] = request.form['username']
-            #flash ("You have successfully registered")
-            return redirect(url_for('index'))
-        else:
-            #error = "That username is already taken"
-            return  render_template ("register.html"
-                                     #,error = error
-                                 )
-    else:
-        return  render_template ("register.html"
-                                 #, error = error
-        )
+@app.route('/login', methods=['GET', 'POST'])
+def login():
+    if 'username' in session:
+        flash("You're already logged in as " + escape(session['username']))
+        return redirect(url_for("index"));
+    try:
+        if request.form["login"] != None:
+            if base.validate(request.form['username'], request.form['password']):
+                print("yolo")
+                session['username'] = request.form['username']
+                flash('You were successfully logged in')
+                print("YOU LOGGED IN CONTRASGOITR")
+                return redirect(url_for('index'))
+            else:
+                flash("invalid credentials")
+                #error = "Invalid credentials"
+                return render_template ("login.html"
+                                        #, error = error
+                )
+    except:
+        print("YOURE OUT OF THE LOGIN")
+    try:
+        if request.form["register"] != None:
+            print("YOURE IN REGISTER")
+            if (request.form["password1"] != request.form["password2"]):
+                flash("Passwords don't match")
+                return redirect(url_for("login"))
+            if base.addUser(request.form['username'], request.form['password1']):
+                session['username'] = request.form['username']
+                flash ("You have successfully registered")
+                return redirect(url_for('index'))
+            else:
+                flash("That username is already taken")
+                return  render_template ("register.html"
+                                         #,error = error
+                                     )
+    except:
+        print("YOURE OUT OF REGISTER")
+    return render_template("login.html")
 
 #HAVE INPUTS FOR 'username' 'password' AND 'newpassword'
 @app.route('/settings', methods=['GET', 'POST'])
 def settings():
+    '''
     #error = None
     if 'username' in session:
-        if request.method == 'POST':
-            if base.updateUser (escape(session['username']), request.form['password'], request.form ['newpassword']):
-                #flash ("You have successfully changed your settings")
-                return redirect(url_for('index'))
-            else:
-                #error = "You have entered the wrong password"
-                return render_template ("settings.html"
-                                        #, 
-                                        #corner = escape(session['username'])
-                                        #, 
-                                        #error = error
-    )
+        if request.form['newpw1'] != request.form['newpw2']:
+            flash("your passwords don't match")
+        if base.updateUser(escape(session['username']), request.form['oldpw'], request.form['newpw1']):
+               flash("Info updated")
         else:
-            return render_template ("settings.html"
-                                    #, 
-                                    #corner = escape(session['username'])
-                                    #, 
-                                    #error = error
-            )
+               flash("wrong password")
     else:
-        return render_template ("error.html")
-
+        flash("You are not logged in")
+        return redirect(url_for(index))
+    '''
+    return render_template("settings.html")
     
-
 @app.route('/reset')
 def reset():
     base.restart()
