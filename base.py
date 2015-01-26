@@ -81,7 +81,3 @@ def updateUser(usernamei, passwordi, passwordn):
     return False
 
 restart()
-addUser("sdfsdf", "asf")
-addUser("sdfsdfsdfsd", "sdfsdfasdf")
-printUsers()
-print validate("No1","number1")
