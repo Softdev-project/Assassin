@@ -1,3 +1,5 @@
+#FEATURES I COULD USE
+#PASSIVE UPDATING WITH INFO FROM MONOGO
 import random, math
 from pymongo import Connection
 conn = Connection()
@@ -24,7 +26,8 @@ def restart():
     'tid':'1',
     'tlat':'0',
     'tlong':'0',
-    'num_click':'0'}
+    'num_click':'0',
+    'status':'alive'}
     db.usertable.insert(account1)
     db.usertable.insert(account2)
     db.datatable.insert(data)
@@ -109,7 +112,8 @@ def assignTargets():
     'tid': users[0][1],
     'tlat':'0',
     'tlong':'0',
-    'num_click':'0'}
+    'num_click':'0',
+    'status':'alive'}
     db.datatable.insert (data)
     while (i < l) :
         data = {'user': users[i][0],
@@ -120,10 +124,17 @@ def assignTargets():
                 'tid': users[i+1][1],
                 'tlat':'0',
                 'tlong':'0',
-                'num_click':'0'}
+                'num_click':'0',
+                'status':'alive'}
         db.datatable.insert (data)
         i = i + 1
 
+def killStatus(id):
+    cres = db.usertable.find({'userid':str(id)})
+    for r in cres:
+        db.usertable.drop#something
+    reassignTargets()#upsert?
+    
 def distance (a, b):
     b = b-a
     return math.sqrt ((a*a)+(b*b))
