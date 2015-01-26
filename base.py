@@ -38,6 +38,14 @@ def printUsers():
     for r in cres:
         print r
 
+def printData():
+    cres = db.datatable.find()
+    #{}, {'_id':False})
+    #print cres
+    #res = [r
+    for r in cres:
+        print r
+
 def updateID():
     i = db.idtable.find()
     num = 0;
@@ -90,7 +98,7 @@ def assignTargets():
     for r in cres:
         users.append ([r['username'],r['userid']] )
     #assigns to next user
-    l = users.length - 1
+    l = len(users) - 1
     i = 0
     #last user
     data = {'user': users[l][0],
@@ -117,10 +125,11 @@ def assignTargets():
         i = i + 1
 
 def distance (a, b):
-    return sqrt ((a*a)+(b*b))
+    b = b-a
+    return math.sqrt ((a*a)+(b*b))
 
 def kill(lat1, long1, lat2, long2):
     return ((distance (lat1, lat2) < killDistance) and (distance (long1, long2) < killDistance))
 
-#restart()
-#print distance (5, 8)
+restart()
+print distance (5, 8)

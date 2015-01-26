@@ -108,7 +108,7 @@ def restart():
 @app.route('/switch', methods=['GET', 'POST'])
 def switch():
     gameON = not gameON
-    #base.assignTargets()
+    base.assignTargets()
     
 # set the secret key.  keep this really secret:
 #this is fake very fake oooh
