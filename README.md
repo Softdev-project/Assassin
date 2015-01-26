@@ -10,17 +10,16 @@ Jessica
 * Accounts
 * Mongodb
 * Flask
-* Ajax?
 
 Jason
 * Nginx
 * Server
-* Mongo/JavaScript connection
+* Mongo/JavaScript/Ajax connection
 
 Nathaniel
 * Nginx
 * Server
-* Mongo/Javascript connection
+* Mongo/Javascript/Ajax connection
 
 Vanessa
 * Mapping
