@@ -3,7 +3,6 @@ from functools import wraps
 import base
 
 app = Flask(__name__)
-gameON = False
 
 @app.route('/')
 def index():
@@ -88,28 +87,6 @@ def settings():
     
 @app.route('/setup', methods=['GET', 'POST'])
 
-
-@app.route('/profile', methods=['GET', 'POST'])
-def profile():
-    if 'username' in session:
-        if gameON:
-            render_template ("profile.html")
-        else:
-            flash("Anathema has yet to begin")
-            return redirect(url_for("index"))
-    else:
-        flash("You are not logged in")
-        return redirect(url_for("index"))
-
-@app.route('/restart', methods=['GET', 'POST'])
-def restart():
-    base.restart()
-
-@app.route('/switch', methods=['GET', 'POST'])
-def switch():
-    gameON = not gameON
-    #base.assignTargets()
-    
 # set the secret key.  keep this really secret:
 #this is fake very fake oooh
 app.secret_key = 'A0Zr98j/3yX R~XHH!jmN]LWX/,?RT'

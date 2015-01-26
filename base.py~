@@ -1,8 +1,9 @@
-import random, math
+import random
+#math
 from pymongo import Connection
 conn = Connection()
 db = conn['1247']
-killDistance = 0.005
+#killDistance = 0.005
 
 def restart():
     ##need counter for id
@@ -81,46 +82,11 @@ def updateUser(usernamei, passwordi, passwordn):
         return True
     return False
 
-
-
-def assignTargets():
-    #test this out first
-    cres = db.usertable.find()
-    users = []
-    for r in cres:
-        users.append ([r['username'],r['userid']] )
-    #assigns to next user
-    l = users.length - 1
-    i = 0
-    #last user
-    data = {'user': users[l][0],
-    'uid': users[l][1], 
-    'ulat':'0', #load initial coordinates
-    'ulong':'0', 
-    'target': users[0][0],
-    'tid': users[0][1],
-    'tlat':'0',
-    'tlong':'0',
-    'num_click':'0'}
-    db.datatable.insert (data)
-    while (i < l) :
-        data = {'user': users[i][0],
-                'uid': users[i][1], 
-                'ulat':'0', #load initial coordinates
-                'ulong':'0', 
-                'target': users[i+1][0],
-                'tid': users[i+1][1],
-                'tlat':'0',
-                'tlong':'0',
-                'num_click':'0'}
-        db.datatable.insert (data)
-        i = i + 1
-
 def distance (a, b):
     return sqrt ((a*a)+(b*b))
 
 def kill(lat1, long1, lat2, long2):
     return ((distance (lat1, lat2) < killDistance) and (distance (long1, long2) < killDistance))
 
-#restart()
+restart()
 #print distance (5, 8)
