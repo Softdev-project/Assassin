@@ -3,7 +3,6 @@ from functools import wraps
 import base
 
 app = Flask(__name__)
-gameON = False
 
 @app.route('/')
 def index():
@@ -11,7 +10,11 @@ def index():
     username = "NOT LOGGED IN"
     if 'username' in session:
         username = "LOGGED IN AS " + escape(session['username'])
-    return render_template ("index.html", username = username)
+        return render_template ("index.html", 
+                                username = username,
+                                corner = session['username'])
+    return render_template ("index.html", 
+                            username = username,)
 
 
 @app.route('/logout')
@@ -84,16 +87,19 @@ def settings():
     else:
         flash("You are not logged in")
         return redirect(url_for("index"))
-    return render_template("settings.html")
+    return render_template("settings.html", 
+                           corner = session['username'])
     
 @app.route('/setup', methods=['GET', 'POST'])
 
 
-@app.route('/profile', methods=['GET', 'POST'])
-def profile():
+
+@app.route('/game', methods=['GET', 'POST'])
+def game():
     if 'username' in session:
-        if gameON:
-            render_template ("profile.html")
+        if base.gameONcheck():
+            return render_template ("game.html",
+                                    corner = session['username'])
         else:
             flash("Anathema has yet to begin")
             return redirect(url_for("index"))
@@ -101,14 +107,17 @@ def profile():
         flash("You are not logged in")
         return redirect(url_for("index"))
 
+
 @app.route('/restart', methods=['GET', 'POST'])
 def restart():
     base.restart()
 
 @app.route('/switch', methods=['GET', 'POST'])
 def switch():
-    gameON = not gameON
+    base.gameON()
     base.assignTargets()
+    return redirect(url_for("index"))
+
     
 # set the secret key.  keep this really secret:
 #this is fake very fake oooh

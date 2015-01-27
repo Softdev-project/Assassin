@@ -11,6 +11,7 @@ def restart():
     db.usertable.drop()
     db.datatable.drop()
     db.idtable.drop()
+    db.gameon.drop()
     ids = {'idnum':'2'}
     account1 = {'username': 'No1',
                 'userid': '0',
@@ -28,10 +29,12 @@ def restart():
     'tlong':'0',
     'num_click':'0',
     'status':'alive'}
+    switch = {'switch':'1'}
     db.usertable.insert(account1)
     db.usertable.insert(account2)
     db.datatable.insert(data)
     db.idtable.insert(ids)
+    db.gameon.insert(switch)
 
 def printUsers():
     cres = db.usertable.find()
@@ -48,6 +51,25 @@ def printData():
     #res = [r
     for r in cres:
         print r
+
+def gameON():
+    cres = db.gameon.find()
+    n = int(cres[0]['switch'])
+    if (n == 0):
+        db.gameon.update ({'switch':'0'}, {'$set':{'switch':"1"}})
+        return False
+    else:
+        db.gameon.update ({'switch':'1'}, {'$set':{'switch':"0"}})
+        return True
+
+def gameONcheck():
+    cres = db.gameon.find()
+    n = int(cres[0]['switch'])
+    if (n == 0):
+        return False
+    else:
+        return True
+
 
 def updateID():
     i = db.idtable.find()
@@ -143,4 +165,4 @@ def kill(lat1, long1, lat2, long2):
     return ((distance (lat1, lat2) < killDistance) and (distance (long1, long2) < killDistance))
 
 restart()
-print distance (5, 8)
+print gameON()
