@@ -107,6 +107,17 @@ def game():
         flash("You are not logged in")
         return redirect(url_for("index"))
 
+@app.route('/status', methods=['GET', 'POST'])
+def status ():
+    return render_template ("status.html", corner = session['username'])
+
+@app.route('/kill', methods=['GET', 'POST'])
+def kill():
+    return render_template ("kill.html", corner = session['username'])
+
+@app.route('/map', methods=['GET', 'POST'])
+def map():
+    return render_template ("map.html", corner = session['username'])
 
 @app.route('/restart', methods=['GET', 'POST'])
 def restart():
