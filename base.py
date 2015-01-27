@@ -1,5 +1,6 @@
 #FEATURES I COULD USE
 #PASSIVE UPDATING WITH INFO FROM MONOGO
+
 import random, math
 from pymongo import Connection
 conn = Connection()
@@ -22,18 +23,27 @@ def restart():
     account2 = {'username': 'No2',
                 'userid': '1',
                 'password':'number2',}
-    data = {'user':'user',
-    'uid':'0', 
-    'ulat':'0', 
-    'ulong':'0', 
-    'tid':'1',
-    'num_click':'0'}
+    data1 = {
+        'user': "No1",
+        'id': "0", 
+        'ulat':'0', #load initial coordinates
+        'ulong':'0', 
+        'tid': 'x',
+        'num_click':'0'}
+    data2 = {
+        'user': "No2",
+        'id': "1", 
+        'ulat':'0', #load initial coordinates
+        'ulong':'0', 
+        'tid': 'x',
+        'num_click':'0'}
     switch = {'switch':'1'}
     # 0 = on
     # 1 = off
     db.usertable.insert(account1)
     db.usertable.insert(account2)
-    db.datatable.insert(data)
+    db.datatable.insert(data1)
+    db.datatable.insert(data2)
     db.idtable.insert(ids)
     db.gameon.insert(switch)
 
@@ -91,16 +101,25 @@ def validate(usernamei, passwordi):
     if len(res)>0:
         return True
     return False
-
+    
 
 def addUser(usernamei, passwordi,):
     cres = db.usertable.find({'username':usernamei})
     res = [r for r in cres]
+    n = getNewID()
     print res
     if len(res)>0:
         return False    
-    nu = {'username': usernamei, 'password':passwordi, 'userid':getNewID()}
+    nu = {'username': usernamei, 'password':passwordi, 'userid':n}
     db.usertable.save(nu)
+    data = {
+        'user': usernamei,
+        'id': n, 
+        'ulat':'0', #load initial coordinates
+        'ulong':'0', 
+        'tid': 'x',
+        'num_click':'0'}
+    db.datatable.insert (data)
     return True
 
 
@@ -113,11 +132,24 @@ def updateUser(usernamei, passwordi, passwordn):
 ##############
 #INGAME SHIT
 
+def getID(username):
+    cres = db.usertable.find()
+    users = []
+    for r in cres:
+        if (r['username'] == username):
+            return r['userid']
+    return -1
+
+def getName(userid):
+    cres = db.usertable.find()
+    users = []
+    for r in cres:
+        if (r['userid'] == userid):
+            return r['username']
+    return -1
+
 def printData():
     cres = db.datatable.find()
-    #{}, {'_id':False})
-    #print cres
-    #res = [r
     for r in cres:
         print r
         
@@ -146,68 +178,39 @@ def distance(lat1, long1, lat2, long2):
     return arc
 
 def assignTargets():
-    #test this out first
-    cres = db.usertable.find()
+    cres = db.datatable.find()
     users = []
     for r in cres:
-        users.append ([r['username'],r['userid']] )
+        print r
+        print r['id']
+        users.append ([getName(r['id']),r['id']] )
     #assigns to next user
     l = len(users) - 1
     i = 0
     #last user
-    data = {'user': users[l][0],
-    'uid': users[l][1], 
-    'ulat':'0', #load initial coordinates
-    'ulong':'0', 
-    'tid': users[0][1],
-    'num_click':'0'}
-    db.datatable.insert (data)
+    data = {
+        'user': users[l][0],
+        'id': users[l][1], 
+        'ulat':'0', #load initial coordinates
+        'ulong':'0', 
+        'tid': users[0][1],
+        'num_click':'0'}
+    db.datatable.update ({'id': users[l][1]}, data)
     while (i < l) :
         data = {'user': users[i][0],
-                'uid': users[i][1], 
+                'id': users[i][1], 
                 'ulat':'0', #load initial coordinates
                 'ulong':'0', 
                 'tid': users[i+1][1],
                 'tlong':'0'}
-        db.datatable.insert (data)
+        db.datatable.update ({'id': users[i][1]}, data)
         i = i + 1
-    
- 
-def distance(lat1, long1, lat2, long2):
-    #credit to John D. Cook
-    # Convert latitude and longitude to 
-    # spherical coordinates in radians.
-    degrees_to_radians = math.pi/180.0
-         
-    # phi = 90 - latitude
-    phi1 = (90.0 - lat1)*degrees_to_radians
-    phi2 = (90.0 - lat2)*degrees_to_radians
-         
-    # theta = longitude
-    theta1 = long1*degrees_to_radians
-    theta2 = long2*degrees_to_radians
-         
-    # Compute spherical distance from spherical coordinates.
-         
-    # For two locations in spherical coordinates 
-    # (1, theta, phi) and (1, theta, phi)
-    # cosine( arc length ) = 
-    #    sin phi sin phi' cos(theta-theta') + cos phi cos phi'
-    # distance = rho * arc length
-     
-    cos = (math.sin(phi1)*math.sin(phi2)*math.cos(theta1 - theta2) + 
-           math.cos(phi1)*math.cos(phi2))
-    arc = math.acos( cos )
- 
-    # Remember to multiply arc by the radius of the earth 
-    # in your favorite set of units to get length.
-    return arc
 
 def checkStatus(userid):
-    cres = db.usertable.find()
+    cres = db.datatable.find()
     users = []
     for r in cres:
-        if (r['userid'] == userid): 
+        if (r['id'] == userid): 
             return True
         return False
     return False    
@@ -217,12 +220,32 @@ def killCheck(lat1, long1, lat2, long2):
     return (distance (long1, long2) < killDistance)
 
 def kill(userid):
-    cres = db.usertable.find({'userid':userid})
+    cres = db.datatable.find({'id':userid})
     for r in cres:
-        db.usertable.drop#something
-    reassignTargets()#upsert?
-
+        db.datatable.remove({'id':userid})
+    assignTargets()
 
 
 restart()
-print gameON()
+addUser ("No3", "number3")
+addUser ("No4", "number4")
+print "Users"
+printUsers()
+print "Test get ID"
+print getID("No3")
+print "Test get Name"
+print getName("0")
+print "Data"
+printData()
+print"Assign targets"
+assignTargets()
+print"Data"
+printData()
+kill('0')
+print "Test Kill"
+assignTargets()
+printData()
+print "check status"
+print checkStatus ("1");
+print checkStatus ("0");
+
