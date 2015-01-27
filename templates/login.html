@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+{% block title %}
+Login/Register
+{% endblock %}
+{% block body %}
+<form name="login" method="post">
+  <input type="text" name="username" placeholder="Username">
+  <input type="password" name="password" placeholder="Password">
+  <input type="submit" name="login" value="login">
+</form>
+<form name="register" method="post">
+  <input type="text" name="username" placeholder="Username">
+  <input type="password" name="password1" placeholder="Password">
+  <input type="password" name="password2" placeholder="Password">
+  <input type="submit" name="register" value="register">
+</form>
+{% endblock %}
