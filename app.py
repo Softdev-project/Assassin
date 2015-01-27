@@ -117,7 +117,8 @@ def kill():
 
 @app.route('/map', methods=['GET', 'POST'])
 def map():
-    return render_template ("map.html", corner = session['username'])
+    return render_template ("map.html", #corner = session['username']
+    )
 
 @app.route('/restart', methods=['GET', 'POST'])
 def restart():
