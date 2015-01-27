@@ -1,3 +1,4 @@
+
 var initialLocation;
 var siberia = new google.maps.LatLng(60, 105);
 var newyork = new google.maps.LatLng(40.69847032728747, -73.9514422416687);
@@ -61,8 +62,8 @@ var log = function log() {
     $.ajax(
     {
       type: "POST",
-      url: "app.py",
-      data: "stuff_for_python=" + mylat + mylng,
+      url: "test.py",
+        data: {stuff: "stuff_for_python=" + mylat + mylng},
       success: function(response)
         {
           console.log("success");
@@ -78,5 +79,20 @@ function setTarget(lat,lng){
     targetlng= lng;
     init();
 }
+
+$(function() {
+    $('a#calculate').bind('click', function() {
+        $.getJSON('/_add_numbers', {
+          mylat: mylat,
+          mylng: mylng
+        }, function(data) {
+            //$("#result").text(data.result);
+            console.log(data.result);
+        });
+        return false;
+    });
+});
+
+
 
 window.onLoad = init();
