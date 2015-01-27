@@ -14,12 +14,16 @@ def index():
 # Route that will process the AJAX request, sum up two
 # integer numbers (defaulted to zero) and return the
 # result as a proper JSON response (Content-Type, etc.)
-@app.route('/_add_numbers')
-def add_numbers():
+
+@app.route('/target')
+def target():
+    #Recieves lat and lng
     mylat = request.args.get('mylat', 0, type=int)
     mylng = request.args.get('mylng', 0, type=int)
-    return jsonify(result=mylat + mylng)
-
+    #You can add to mongo here
+    
+    return jsonify(result=mylat + mylng)#optional if you want to return data
+    
 if __name__ == '__main__':
     app.debug = True
     app.run(host = "127.0.0.1", port = 8000)
