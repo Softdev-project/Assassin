@@ -26,15 +26,15 @@ def restart():
     data1 = {
         'user': "No1",
         'id': "0", 
-        'ulat':'0', #load initial coordinates
-        'ulong':'0', 
+        'lat':'lat0', #load initial coordinates
+        'long':'long0', 
         'tid': 'x',
         'num_click':'0'}
     data2 = {
         'user': "No2",
         'id': "1", 
-        'ulat':'0', #load initial coordinates
-        'ulong':'0', 
+        'lat':'lat1', #load initial coordinates
+        'long':'long1', 
         'tid': 'x',
         'num_click':'0'}
     switch = {'switch':'1'}
@@ -63,9 +63,9 @@ def gameONcheck():
     cres = db.gameon.find()
     n = int(cres[0]['switch'])
     if (n == 0):
-        return False
-    else:
         return True
+    else:
+        return False
 
 ####################
 #USER INFO SHIT
@@ -115,8 +115,8 @@ def addUser(usernamei, passwordi,):
     data = {
         'user': usernamei,
         'id': n, 
-        'ulat':'0', #load initial coordinates
-        'ulong':'0', 
+        'lat': "lat"+str(n), #load initial coordinates
+        'long': "long"+str(n), 
         'tid': 'x',
         'num_click':'0'}
     db.datatable.insert (data)
@@ -139,6 +139,7 @@ def getID(username):
         if (r['username'] == username):
             return r['userid']
     return -1
+
 
 def getName(userid):
     cres = db.usertable.find()
@@ -181,8 +182,8 @@ def assignTargets():
     cres = db.datatable.find()
     users = []
     for r in cres:
-        print r
-        print r['id']
+        #print r
+        #print r['id']
         users.append ([getName(r['id']),r['id']] )
     #assigns to next user
     l = len(users) - 1
@@ -191,33 +192,65 @@ def assignTargets():
     data = {
         'user': users[l][0],
         'id': users[l][1], 
-        'ulat':'0', #load initial coordinates
-        'ulong':'0', 
+        'lat':getLat(users[l][1]), #load initial coordinates
+        'long':getLong(users[l][1]), 
         'tid': users[0][1],
         'num_click':'0'}
     db.datatable.update ({'id': users[l][1]}, data)
     while (i < l) :
         data = {'user': users[i][0],
                 'id': users[i][1], 
-                'ulat':'0', #load initial coordinates
-                'ulong':'0', 
+                'lat':getLat(users[i][1]), #load initial coordinates
+                'long':getLong(users[i][1]), 
                 'tid': users[i+1][1],
-                'tlong':'0'}
+                'num_click':'0'}
         db.datatable.update ({'id': users[i][1]}, data)
         i = i + 1
 
 def checkStatus(userid):
     cres = db.datatable.find()
-    users = []
     for r in cres:
-        if (r['id'] == userid): 
+        if (r['id'] == userid):  
             return True
         return False
     return False    
 
-def getTargetLat (tid):
+def getTarget(username):
+    cres = db.datatable.find()
+    for r in cres:
+        if (r['id'] == userid): 
+            return r['tid']
+    return -1
 
-def getTargetLong (tid): 
+def getLat (tid):
+    cres = db.datatable.find()
+    for r in cres:
+        if (r['id'] == tid):
+            return r['lat']
+    return 0
+
+def getLong (tid): 
+    cres = db.datatable.find()
+    for r in cres:
+        if (r['id'] == tid):
+            return r['long']
+    return 0
+
+def updateLat (uid, lat):
+    cres = db.datatable.find()
+    for r in cres:
+        if (r['id'] == uid):
+            data = {'lat':lat}
+            db.datatable.update ({'id':uid}, {"$set": data})
+
+def updateLong (uid, long):
+    cres = db.datatable.find()
+    for r in cres:
+        if (r['id'] == uid):
+            data = {'long':long}
+            db.datatable.update ({'id':uid}, {"$set": data})
+
+
 
 def killCheck(lat1, long1, lat2, long2):
     return (distance (long1, long2) < killDistance)
@@ -240,6 +273,8 @@ print "Test get Name"
 print getName("0")
 print "Data"
 printData()
+print "Lat"
+print getLat("1")
 print"Assign targets"
 assignTargets()
 print"Data"
@@ -249,6 +284,8 @@ print "Test Kill"
 assignTargets()
 printData()
 print "check status"
-print checkStatus ("1");
-print checkStatus ("0");
-
+print checkStatus ("1")
+print checkStatus ("0")
+print "update lat"
+updateLat ("1", "cawmofo")
+printData()

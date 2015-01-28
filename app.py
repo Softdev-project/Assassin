@@ -83,9 +83,7 @@ def settings():
         return redirect(url_for("index"))
     return render_template("settings.html", 
                            corner = session['username'])
-    
-@app.route('/setup', methods=['GET', 'POST'])
-
+                    
 
 
 @app.route('/game', methods=['GET', 'POST'])
@@ -101,9 +99,13 @@ def game():
         flash("You are not logged in")
         return redirect(url_for("index"))
 
+##updates locations
 @app.route('/status', methods=['GET', 'POST'])
 def status ():
-    return render_template ("status.html", corner = session['username'])
+    return render_template ("status.html", 
+                            corner = session['username'],
+                            #user_status = get,
+                            #target_status = get)
 
 @app.route('/kill', methods=['GET', 'POST'])
 def kill():
@@ -120,8 +122,10 @@ def restart():
 
 @app.route('/switch', methods=['GET', 'POST'])
 def switch():
-    base.gameON()
-    base.assignTargets()
+    if (base.gameON()):
+        base.assignTargets()
+    else:
+        base.restart()
     return redirect(url_for("index"))
 
     
