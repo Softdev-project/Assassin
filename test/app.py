@@ -1,10 +1,4 @@
-from flask import Flask, render_template, request, jsonify
-
-
-#######################################################
-#######################################################
-#   Note: Change file name to app.py to run          
-#######################################################
+from flask import Flask, render_template, request, jsonify, redirect, url_for
 
 # Initialize the Flask application
 app = Flask(__name__)
@@ -24,12 +18,19 @@ def index():
 @app.route('/target')
 def target():
     #Recieves lat and lng
-    mylat = request.args.get('mylat', 0, type=int)
-    mylng = request.args.get('mylng', 0, type=int)
-    #You can add to mongo here
-    
-    return jsonify(result=mylat + mylng)#optional if you want to return data
-    
+    mylat = request.args.get('mylat')
+    mylng = request.args.get('mylng')
+ 
+    print mylat
+    print mylng
+    print mylat + mylng
+    #return jsonify(result=mylat + mylng)#optional if you want to return data
+    return "holo"
+
+@app.route ('/yolo')
+def yolo():
+    return"hi"
+
 if __name__ == '__main__':
     app.debug = True
     app.run(host = "127.0.0.1", port = 8000)

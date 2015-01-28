@@ -1,3 +1,24 @@
+
+<!DOCTYPE html>
+<html>
+  <head>
+    <style type="text/css">
+      html, body, #map-canvas { height: 100%; margin: 0; padding: 0;}
+    </style>
+
+  </head>
+  <body>
+  <h1> Hello </h1>
+  <a href="javascript:void(0);" id="calculate" >Send Data</a>
+  <a href = "/yolo"> yolo </a>
+<div id="map-canvas"></div>
+  
+    <script src="http://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.1-rc2/jquery.js"></script>   
+    <script type="text/javascript"
+            src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAO3EAgnxm_xkXlf8kccYlLdMYoo0-Vefs">
+    </script>
+    <script>
+    
 var initialLocation;
 var siberia = new google.maps.LatLng(60, 105);
 var newyork = new google.maps.LatLng(40.69847032728747, -73.9514422416687);
@@ -57,26 +78,38 @@ var init = function initialize() {
         map.setCenter(initialLocation);
     }
 }
+
 var log = function log() {
-    $.ajax(
-    {
-      type: "POST",
-      url: "app.py",
-      data: "stuff_for_python=" + mylat + mylng,
-      success: function(response)
-        {
-          console.log("success");
-        },
-      error: function(response)
-        {
-          console.log("error");
-        }
-    });
+    $.getJSON('/target', {
+        mylat: mylat, 
+        mylng: mylng
+        }, function(data) {
+          //$("#result").text(data.result);
+          console.log(data.result);
+        });
+        return false;
 }
+
 function setTarget(lat,lng){
     targetlat = lat;
     targetlng= lng;
     init();
 }
 
+$('a#calculate').bind('click', log);
+
+
+    
+    
 window.onLoad = init();
+<!--window.onLoad = log();-->
+
+
+
+    </script> 
+  </body>
+</html>
+
+
+
+

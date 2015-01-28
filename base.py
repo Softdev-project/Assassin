@@ -1,5 +1,7 @@
 #FEATURES I COULD USE
 #PASSIVE UPDATING WITH INFO FROM MONOGO
+#deletes all accounts at the end of a game
+#/restart restarts everything
 
 import random, math
 from pymongo import Connection
@@ -37,7 +39,7 @@ def restart():
         'long':'long1', 
         'tid': 'x',
         'num_click':'0'}
-    switch = {'switch':'0'}
+    switch = {'switch':'1'}
     # 0 = on
     # 1 = off
     db.usertable.insert(account1)
@@ -47,16 +49,51 @@ def restart():
     db.idtable.insert(ids)
     db.gameon.insert(switch)
 
+def reset():
+    ##need counter for id
+    db.usertable.drop()
+    db.datatable.drop()
+    db.idtable.drop()
+    ids = {'idnum':'2'}
+    account1 = {'username': 'No1',
+                'userid': '0',
+                'password':'number1',}
+    account2 = {'username': 'No2',
+                'userid': '1',
+                'password':'number2',}
+    data1 = {
+        'user': "No1",
+        'id': "0", 
+        'lat':'lat0', #load initial coordinates
+        'long':'long0', 
+        'tid': 'x',
+        'num_click':'0'}
+    data2 = {
+        'user': "No2",
+        'id': "1", 
+        'lat':'lat1', #load initial coordinates
+        'long':'long1', 
+        'tid': 'x',
+        'num_click':'0'}
+    # 0 = on
+    # 1 = off
+    db.usertable.insert(account1)
+    db.usertable.insert(account2)
+    db.datatable.insert(data1)
+    db.datatable.insert(data2)
+    db.idtable.insert(ids)
+
 ################
 ##SWITCH SHIT
 def gameON():
     cres = db.gameon.find()
     n = int(cres[0]['switch'])
+    print n
     if (n == 0):
-        db.gameon.update ({'switch':'0'}, {'$set':{'switch':"1"}})
+        db.gameon.update ({'switch':'0'}, {'switch':"1"})
         return False
     else:
-        db.gameon.update ({'switch':'1'}, {'$set':{'switch':"0"}})
+        db.gameon.update ({'switch':'1'}, {'switch':"0"})
         return True
 
 def gameONcheck():
@@ -84,7 +121,7 @@ def updateID():
         #num = int(n) + 1
         num = int(n['idnum']) + 1
         db.idtable.update ({'idnum':n['idnum']}, {"$set": {'idnum': str(num)}})
-        print n['idnum']
+        #print n['idnum']
     #print num
 
 def getNewID():
@@ -107,7 +144,6 @@ def addUser(usernamei, passwordi,):
     cres = db.usertable.find({'username':usernamei})
     res = [r for r in cres]
     n = getNewID()
-    print res
     if len(res)>0:
         return False    
     nu = {'username': usernamei, 'password':passwordi, 'userid':n}
@@ -249,10 +285,20 @@ def updateLong (uid, ulong):
             data = {'long':ulong}
             db.datatable.update ({'id':uid}, {"$set": data})
 
-
+def checkWin (uid): 
+    cres = db.datatable.find()
+    n = 0
+    x = 0
+    for r in cres:
+        n = n + 1
+        if (r['id'] == uid):
+            x = x+1
+    if ( (n==1) and (x ==1)) :
+        return True
+    return False
 
 def killCheck(lat1, long1, lat2, long2):
-    return (distance (long1, long2) < killDistance)
+    return (distance (float(lat1), float (long1), float (lat2), float(long2)) < killDistance)
 
 def kill(userid):
     cres = db.datatable.find({'id':userid})
@@ -261,9 +307,12 @@ def kill(userid):
     #assignTargets()
 
 
-restart()
-addUser ("No3", "number3")
-addUser ("No4", "number4")
+#restart()
+#addUser ("No3", "number3")
+#addUser ("No4", "number4")
+#assignTargets()
+#print (distance (float("40.7"), float ("-73.8593544"), float ("40.719031099999995"), float("-73")) < killDistance)
+"""
 print "Users"
 printUsers()
 print "Test get ID"
@@ -290,4 +339,5 @@ print checkStatus ("3")
 print "update lat"
 updateLat ("1", "1lat")
 printData()
+"""
 print "RUNNING WEBSITE NOW"

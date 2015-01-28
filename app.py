@@ -7,6 +7,8 @@ app = Flask(__name__)
 @app.route('/')
 def index():
     #base.printUsers()
+    print base.gameONcheck()
+            
     if 'username' in session:
         return render_template ("index.html", 
                                 corner = session['username'])
@@ -49,7 +51,7 @@ def login():
                 return redirect(url_for('index'))
             else:
                 flash("That username is already taken")
-                return  render_template ("register.html")
+                return  render_template ("login.html")
     except:
         pass
     return render_template("login.html")
@@ -83,10 +85,12 @@ def game():
         if base.gameONcheck():
             print "BEFORE UPDATE"
             base.printData()
+            uid = base.getID(session['username'])
+            tid = base.getTargetID(uid)
             return render_template ("game.html",
                                     corner = session['username'],
-                                   # username = session['username']
-                                    #target
+                                    username = session['username'], 
+                                    target = base.getName(tid)
             )
         else:
             flash("Anathema has yet to begin")
@@ -139,16 +143,39 @@ def status ():
 #killed, reassign
 @app.route('/kill', methods=['GET', 'POST'])
 def kill():
-    uid = base.getID(session['username'])
-    tid = base.getTargetID(uid)
-    if (base.killCheck (base.getLat (uid), base.getLong (uid), base.getLat (tid), base.getLong(uid))):
-        base.kill (tid)
-        #if (base.winCheck()):
-        flash ("You have killed your target! You have been assigned another target.")
-    else: 
-        flash ("You have failed to kill your target.")
-    return redirect (url_for ("game"))
+    if 'username' in session:
+        if base.gameONcheck():
+            uid = base.getID(session['username'])
+            tid = base.getTargetID(uid)
+            lat1 = base.getLat(uid)
+            long1 = base.getLong(uid)
+            lat2 = base.getLat(tid)
+            long2 = base.getLong(tid)
+            #print lat1
+            #print long1
+            #print lat2
+            #print long2
+            if (base.killCheck (lat1, long1, lat2, long2)):
+                base.kill(tid)
+                if ( base.checkWin(uid)):
+                    flash ("You have won! Congrats!")
+                    return redirect (url_for ("switch"))
 
+                else:
+                    base.assignTargets()
+                    flash ("You have killed your target! You have been assigned another target.")
+                    return redirect (url_for ("game"))
+
+            else: 
+                flash ("You have failed to kill your target.")
+                return redirect (url_for ("game"))
+        else: 
+            flash("Anathema has yet to begin")
+            return redirect(url_for("index"))
+    else:
+        flash("You are not logged in")
+        return redirect(url_for("index"))
+    
 
 @app.route('/map', methods=['GET', 'POST'])
 def map():
@@ -164,24 +191,31 @@ def map():
 
 @app.route('/target', methods=['GET', 'POST'])
 def target():
-    uid = base.getID(session['username'])      
-    mylat = "lat"
-    mylong = "long" ##replace and run
-    base.updateLat (uid, mylat) #will upload into mongo
-    base.updateLong (uid, mylong)
+    if 'username' in session:
+        print "AFTER LOAD GAME"
+        uid = base.getID(session['username'])      
+        mylat = request.args.get('mylat')
+        mylong = request.args.get('mylng') ##replace and run
+        base.updateLat (uid, mylat) #will upload into mongo
+        base.updateLong (uid, mylong)
+        base.printData()
     return "hi"
 
 @app.route('/restart', methods=['GET', 'POST'])
 def restart():
     base.restart()
+    base.assignTargets()
+    return redirect (url_for ("index"))
 
 @app.route('/switch', methods=['GET', 'POST'])
 def switch():
-    if (base.gameON()):
-        print"hi"
+    base.gameON()
+    if (base.gameONcheck()):
+        print base.gameONcheck()
         base.assignTargets()
     else:
-        base.restart()
+        print base.gameONcheck()
+        base.reset()
     return redirect(url_for("index"))
 
     
