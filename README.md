@@ -2,9 +2,14 @@ Anathema
 ========
 Assassin
 --------
-http://help.wtf.im:1247
+project: http://help.wtf.im:1247
 
+video: https://vimeo.com/118027405
+
+
+-----
 Leader: Jessica Ng
+
 Members: Jason Lu, Nathaniel Brassell, Vanessa Yan
 
 Jessica
