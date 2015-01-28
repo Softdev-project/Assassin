@@ -119,7 +119,7 @@ def status ():
                             #user_status = get,
                             #target_status = get
                         )"""
-
+#killed, reassign
 @app.route('/kill', methods=['GET', 'POST'])
 def kill():
     return render_template ("kill.html", corner = session['username'])
