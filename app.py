@@ -23,6 +23,8 @@ def target():
     #You can add to mongo here
     
     return jsonify(result=mylat + mylng)#optional if you want to return data
+    print mylat
+    print mylng
     
 if __name__ == '__main__':
     app.debug = True
