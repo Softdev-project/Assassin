@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, jsonify
+from flask import Flask, render_template, request, jsonify, redirect, url_for
 
 # Initialize the Flask application
 app = Flask(__name__)
@@ -24,8 +24,13 @@ def target():
     print mylat
     print mylng
     print mylat + mylng
-    return jsonify(result=mylat + mylng)#optional if you want to return data
-    
+    #return jsonify(result=mylat + mylng)#optional if you want to return data
+    return "holo"
+
+@app.route ('/yolo')
+def yolo():
+    return"hi"
+
 if __name__ == '__main__':
     app.debug = True
     app.run(host = "127.0.0.1", port = 8000)
