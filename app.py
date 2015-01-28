@@ -18,13 +18,13 @@ def index():
 @app.route('/target')
 def target():
     #Recieves lat and lng
-    mylat = request.args.get('mylat', 0, type=int)
-    mylng = request.args.get('mylng', 0, type=int)
-    #You can add to mongo here
-    
-    return jsonify(result=mylat + mylng)#optional if you want to return data
+    mylat = request.args.get('mylat')
+    mylng = request.args.get('mylng')
+ 
     print mylat
     print mylng
+    print mylat + mylng
+    return jsonify(result=mylat + mylng)#optional if you want to return data
     
 if __name__ == '__main__':
     app.debug = True
