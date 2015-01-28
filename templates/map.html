@@ -1,31 +1,107 @@
-<!DOCTYPE html>
-<html>
+{% extends "base.html" %}
+{% block script %}
   <head>
-    </head>
-  <body>
-    <div id="demo">
-      Hello
-      </div>
-    <script>
-       var showposition = function(p){
-        var x = document.getElementById("demo");
-        x.innerHTML = "Lat: "+p.coords.latitude+"<br>Long: "+p.coords.longitude;
-        var img = new Image();
-        img.src="http://maps.googleapis.com/maps/api/staticmap?center="+p.coords.latitude+","+p.coords.longitude+"&zoom=13&size=300x300&sensor=false";
-        x.appendChild(img);
-        }
-        
-        var go = function() {
-        if ("geolocation" in navigator){
-        console.log("Geolocation");
-        navigator.geolocation.getCurrentPosition(showposition);
+    <style type="text/css">
+      html, body, #map-canvas { height: 90%; margin: 0; padding: 0;}
+    </style>
+    <div id="map-canvas"></div>
+    <script src="http://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.1-rc2/jquery.js"></script>
+    <script type="text/javascript"
+	    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAO3EAgnxm_xkXlf8kccYlLdMYoo0-Vefs">
+    </script>
+  <script>
+    var initialLocation;
+var siberia = new google.maps.LatLng(60, 105);
+var newyork = new google.maps.LatLng(40.69847032728747, -73.9514422416687);
+var browserSupportFlag =  new Boolean();
+
+var targetlat = 40;
+var targetlng = -70;
+var mylat = 40;
+var mylng = -70;
+
+var init = function initialize() {
+    var myOptions = {
+        zoom: 6,
+        mapTypeId: google.maps.MapTypeId.ROADMAP
+    };
+    var map = new google.maps.Map(document.getElementById("map-canvas"), myOptions);
+
+    if(navigator.geolocation) {
+        browserSupportFlag = true;
+        navigator.geolocation.getCurrentPosition(function(position) {
+            initialLocation = new google.maps.LatLng(position.coords.latitude,position.coords.longitude);
+            mylat = position.coords.latitude;
+            mylng = position.coords.longitude;
+            map.setCenter(initialLocation);
+
+            var myLatlng = initialLocation;
+            var myMarker = new google.maps.Marker({
+                position: myLatlng,
+                map: map,
+                title:"Hello World!"
+            });
+
+            var targetLatLng = new google.maps.LatLng(targetlat,targetlng);
+            var targetMarker = new google.maps.Marker({
+                position: targetLatLng,
+                map: map,
+                title:"Hello World!"
+            });
+
+        }, function() {
+            handleNoGeolocation(browserSupportFlag);
+        });
+    }
+    else {
+        browserSupportFlag = false;
+        handleNoGeolocation(browserSupportFlag);
+    }
+
+    function handleNoGeolocation(errorFlag) {
+        if (errorFlag == true) {
+            alert("Geolocation service failed.");
+            initialLocation = newyork;
         } else {
-        console.log("No Geolocation");
+            alert("Your browser doesn't support geolocation. We've placed you in Siberia.");
+            initialLocation = siberia;
         }
+        map.setCenter(initialLocation);
+    }
+}
+var log = function log() {
+    $.ajax(
+    {
+      type: "POST",
+      url: "app.py",
+      data: "stuff_for_python=" + mylat + mylng,
+      success: function(response)
+        {
+          console.log("success");
+        },
+      error: function(response)
+        {
+          console.log("error");
         }
-       <!--window.onload = go() -->
-       setInterval(go(), 500);
-       </script>
-    </body>
+    });
+}
+function setTarget(lat,lng){
+    targetlat = lat;
+    targetlng= lng;
+    init();
+}
+
+    window.onLoad = init();
+  </script>
+  {% endblock %}
   
-</html>
+  {% block body %}
+  <center>
+    <p>
+      Find. Stalk. Kill.
+      <br>
+      <a href="/game" class="btn btn-primary btn-lg">Back</a>
+    </p>
+  </center>
+  {% endblock %}
+  

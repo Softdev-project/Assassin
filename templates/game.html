@@ -8,29 +8,23 @@ Game
   <p>Target: <strong>{{target}}</strong></p>
   <hr>
   <div class="row">
-
     <div class="col-md-3 col-sm-6">
       <a href="javascript:void(0);" id="calculate" class="btn btn-primary btn-lg">Send Data</a>
     </div>
-
     <div class="col-md-3 col-sm-6">
       <a href = "/kill" class="btn btn-primary btn-lg btn-danger">Kill</a>
     </div>
-
     <div class="col-md-3 col-sm-6">
       <a href = "/status" class="btn btn-primary btn-lg btn-info">Status</a>
     </div>
-
     <div class="col-md-3 col-sm-6">
       <a href = "/map" class="btn btn-primary btn-lg btn-info">Map</a> 
     </div>
-
   </div>
   <br>
   Sending data will increase chances of killing your target
 </center>
 <script src="http://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.1-rc2/jquery.js"></script>   
-
 <script type="text/javascript"
 	src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAO3EAgnxm_xkXlf8kccYlLdMYoo0-Vefs">
 </script>
@@ -38,23 +32,18 @@ Game
 <script src="../static/index.js">
 </script>
 <script>
-    
-
 var targetlat = 40;
 var targetlng = -70;
 var mylat = 40;
 var mylng = -70;
 
 var init = function initialize() {
-
     if(navigator.geolocation) {
         browserSupportFlag = true;
         navigator.geolocation.getCurrentPosition(function(position) {
             initialLocation = new google.maps.LatLng(position.coords.latitude,position.coords.longitude);
             mylat = position.coords.latitude;
             mylng = position.coords.longitude;
-
-            
         }, function() {
             handleNoGeolocation(browserSupportFlag);
         });
@@ -63,7 +52,6 @@ var init = function initialize() {
         browserSupportFlag = false;
         handleNoGeolocation(browserSupportFlag);
     }
-
     function handleNoGeolocation(errorFlag) {
         if (errorFlag == true) {
             alert("Geolocation service failed.");
@@ -92,13 +80,8 @@ function setTarget(lat,lng){
 
 $('a#calculate').bind('click', log);
 
-
-    
-    
 window.onLoad = init();
 window.onLoad = log();
-
-
 
 </script> 
 
