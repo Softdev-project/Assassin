@@ -36,6 +36,8 @@ Wish List
 Bugs
 ----
 * Possible problems with too many games/people
+* Geolocation accracy can vary, leading to discrepanceies in calculating distance. 
+ * Can improve accuracing by 'sending more data'
 
 Changelog
 ---------
