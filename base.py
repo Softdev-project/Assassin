@@ -28,15 +28,15 @@ def restart():
     data1 = {
         'user': "No1",
         'id': "0", 
-        'lat':'lat0', #load initial coordinates
-        'long':'long0', 
+        'lat':'0', #load initial coordinates
+        'long':'0', 
         'tid': 'x',
         'num_click':'0'}
     data2 = {
         'user': "No2",
         'id': "1", 
-        'lat':'lat1', #load initial coordinates
-        'long':'long1', 
+        'lat':'1', #load initial coordinates
+        'long':'1', 
         'tid': 'x',
         'num_click':'0'}
     switch = {'switch':'1'}
@@ -64,15 +64,15 @@ def reset():
     data1 = {
         'user': "No1",
         'id': "0", 
-        'lat':'lat0', #load initial coordinates
-        'long':'long0', 
+        'lat':'0', #load initial coordinates
+        'long':'0', 
         'tid': 'x',
         'num_click':'0'}
     data2 = {
         'user': "No2",
         'id': "1", 
-        'lat':'lat1', #load initial coordinates
-        'long':'long1', 
+        'lat':'1', #load initial coordinates
+        'long':'1', 
         'tid': 'x',
         'num_click':'0'}
     db.usertable.insert(account1)
@@ -149,8 +149,8 @@ def addUser(usernamei, passwordi,):
     data = {
         'user': usernamei,
         'id': n, 
-        'lat': "lat"+str(n), #load initial coordinates
-        'long': "long"+str(n), 
+        'lat': str(n), #load initial coordinates
+        'long': str(n), 
         'tid': 'x',
         'num_click':'0'}
     db.datatable.insert (data)
