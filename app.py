@@ -25,12 +25,12 @@ def logout():
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
-    base.printUsers()
     if 'username' in session:
         flash("You're already logged in as " + escape(session['username']))
         return redirect(url_for("index"));
     try:
         if request.form["login"] != None:
+            print(request.form['username'])
             if base.validate(request.form['username'], request.form['password']):
                 session['username'] = request.form['username']
                 flash('You were successfully logged in')

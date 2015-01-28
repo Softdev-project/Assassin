@@ -5,18 +5,39 @@ Settings
 {% endblock %}
 
 {% block body %}
-<form method="post">
-  New Password
-  <br>
-  <input type="text" placeholder="old password" name="oldpw">
-  <br>
-  <input type="text" placeholder="new password" name="newpw1">
-  <br>
-  <input type="text" placeholder="new password" name="newpw2">
-  <br>
-  <input type="submit" name="submit" value="submit">
+
+<form class="form-horizontal" name="settings" method="post">
+  <fieldset>
+    <legend>Settings</legend>
+
+    <div class="form-group">
+      <label class="col-md-2 control-label">Old Password</label>
+      <div class="col-md-4 col-xs-12">
+        <input type="password" class="form-control" name="oldpw" placeholder="Old Password">
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label class="col-md-2 control-label">New Password</label>
+      <div class="col-md-4 col-xs-12">
+        <input type="password" class="form-control" name="newpw1" placeholder="Password">
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label class="col-md-2 control-label">New Password</label>
+      <div class="col-md-4 col-xs-12">
+        <input type="password" class="form-control" name="newpw2" placeholder="Password">
+      </div>
+    </div>
+
+    <div class="form-group">
+      <div class="col-md-8 col-md-offset-2">
+        <button type="submit" value="submit" name="submit" class="btn btn-primary">Submit</button>
+      </div>
+    </div>
+
+  </fieldset>
 </form>
-<a href="/">
-Main
-</a>
+
 {% endblock %}

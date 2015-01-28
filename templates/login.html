@@ -4,42 +4,65 @@ Login/Register
 {% endblock %}
 {% block body %}
 
-<form class="form-horizontal">
+<form class="form-horizontal" name="login" method="post">
   <fieldset>
     <legend>Login</legend>
+
     <div class="form-group">
-      <label class="col-lg-2 control-label">Username</label>
-      <div class="col-lg-10">
+      <label class="col-md-2 control-label">Username</label>
+      <div class="col-md-4 col-xs-12">
         <input type="text" class="form-control" name="username" placeholder="Username">
       </div>
     </div>
+
     <div class="form-group">
-      <label for="inputPassword" class="col-lg-2 control-label">Password</label>
-      <div class="col-md-8 col-md-offset-2">
-        <input type="password" class="form-control" id="inputPassword" placeholder="Password">
+      <label class="col-md-2 control-label">Password</label>
+      <div class="col-md-4 col-xs-12">
+        <input type="password" class="form-control" name="password" placeholder="Password">
       </div>
     </div>
+
     <div class="form-group">
       <div class="col-md-8 col-md-offset-2">
-        <button class="btn btn-default">Cancel</button>
-        <button type="submit" class="btn btn-primary">Submit</button>
+        <button type="submit" value="login" name="login" class="btn btn-primary">Login</button>
       </div>
     </div>
+
   </fieldset>
 </form>
 
-<form class="form-horizontal" name="login" method="post">
+<form class="form-horizontal" name="register" method="post">
   <fieldset>
-    <input type="text" name="username" placeholder="Username">
-    <input type="password" name="password" placeholder="Password">
-    <input type="submit" name="login" value="login">
+    <legend>Register</legend>
+
+    <div class="form-group">
+      <label class="col-md-2 control-label">Username</label>
+      <div class="col-md-4 col-xs-12">
+        <input type="text" class="form-control" name="username" placeholder="Username">
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label class="col-md-2 control-label">Password</label>
+      <div class="col-md-4 col-xs-12">
+        <input type="password" class="form-control" name="password1" placeholder="Password">
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label class="col-md-2 control-label">Password</label>
+      <div class="col-md-4 col-xs-12">
+        <input type="password" class="form-control" name="password2" placeholder="Password">
+      </div>
+    </div>
+
+    <div class="form-group">
+      <div class="col-md-8 col-md-offset-2">
+        <button type="submit" value="register" name="register" class="btn btn-primary">Register</button>
+      </div>
+    </div>
+
   </fieldset>
 </form>
 
-<form name="register" method="post">
-  <input type="text" name="username" placeholder="Username">
-  <input type="password" name="password1" placeholder="Password">
-  <input type="password" name="password2" placeholder="Password">
-  <input type="submit" name="register" value="register">
-</form>
 {% endblock %}
