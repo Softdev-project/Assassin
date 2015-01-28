@@ -187,15 +187,29 @@ def kill():
 
 @app.route('/map', methods=['GET', 'POST'])
 def map():
-    uid = base.getID(session['username'])
-    tid = base.getTargetID(uid)
-    return render_template ("map.html", 
-                            corner = session['username'],
-                            ulat = base.getLat (uid),
-                            ulong = base.getLong (uid),
-                            tlat = base.getLat (tid),
-                            tlong = base.getLong (tid)
-                        )
+    if 'username' in session:
+        if base.gameONcheck():
+            print "BEFORE UPDATE"
+            base.printData()
+            uid = base.getID(session['username'])
+            tid = base.getTargetID(uid)
+            if (base.checkStatus(uid)):
+                return render_template ("map.html", 
+                                        corner = session['username'],
+                                        ulat = (base.getLat (uid)),
+                                        ulong = float(base.getLong (uid)),
+                                        tlat = float(base.getLat (tid)),
+                                        tlong = float(base.getLong (tid)))
+            else:
+                flash ("You have been killed", "error")
+                return redirect (url_for ("index"))
+        else:
+            flash("Anathema has yet to begin", "error")
+            return redirect(url_for("index"))
+    else:
+        flash("You are not logged in", "error")
+        return redirect(url_for("index"))
+
 
 @app.route('/target', methods=['GET', 'POST'])
 def target():

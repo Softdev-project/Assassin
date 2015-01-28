@@ -22,7 +22,7 @@ Game
     </div>
   </div>
   <br>
-  Sending data will increase chances of killing your target and gps accuracy
+  Sending data will increase chances of killing your target
 </center>
 <script src="http://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.1-rc2/jquery.js"></script>   
 <script type="text/javascript"

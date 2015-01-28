@@ -15,8 +15,8 @@ var siberia = new google.maps.LatLng(60, 105);
 var newyork = new google.maps.LatLng(40.69847032728747, -73.9514422416687);
 var browserSupportFlag =  new Boolean();
 
-var targetlat = 40;
-var targetlng = -70;
+var targetlat = {{tlat}};
+var targetlng = {{tlong}};
 var mylat = 40;
 var mylng = -70;
 
@@ -31,8 +31,8 @@ var init = function initialize() {
         browserSupportFlag = true;
         navigator.geolocation.getCurrentPosition(function(position) {
             initialLocation = new google.maps.LatLng(position.coords.latitude,position.coords.longitude);
-            mylat = position.coords.latitude;
-            mylng = position.coords.longitude;
+            mylat = {{ulat}};
+            mylng = {{ulong}};
             map.setCenter(initialLocation);
 
             var myLatlng = initialLocation;
@@ -42,7 +42,7 @@ var init = function initialize() {
                 title:"Hello World!"
             });
 
-            var targetLatLng = new google.maps.LatLng(targetlat,targetlng);
+            var targetLatLng = new google.maps.LatLng(mylat,mylng);
             var targetMarker = new google.maps.Marker({
                 position: targetLatLng,
                 map: map,
@@ -97,6 +97,19 @@ function setTarget(lat,lng){
   
   {% block body %}
   <center>
+    <p>
+      Your Coordinates:<br>
+      Latitude: {{ulat}}
+      <br>
+      Longitude: 
+      {{ulong}}
+<p>
+Target Coordinates:
+<br>
+Latitude: {{tlat}}
+<br>
+Longitude: {{tlong}}
+<p>
     <p>
       Find. Stalk. Kill.
       <br>

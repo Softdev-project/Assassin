@@ -75,8 +75,6 @@ def reset():
         'long':'long1', 
         'tid': 'x',
         'num_click':'0'}
-    # 0 = on
-    # 1 = off
     db.usertable.insert(account1)
     db.usertable.insert(account2)
     db.datatable.insert(data1)
@@ -307,7 +305,7 @@ def kill(userid):
     #assignTargets()
 
 
-#restart()
+restart()
 #addUser ("No3", "number3")
 #addUser ("No4", "number4")
 #assignTargets()
