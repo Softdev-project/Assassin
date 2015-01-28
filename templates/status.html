@@ -4,8 +4,9 @@ Status
 {% endblock %}
 
 {% block body %}
-
-status: {{user_status}}
-target status: {{target_status}}
-
+<center>
+<p>Status: <strong>{{user_status}}</strong></p>
+<p>Target: <strong>{{target_status}}</strong></p>
+<a href="/game" class="btn btn-primary btn-lg">Back</a>
+</center>
 {% endblock %}

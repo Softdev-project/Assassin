@@ -1,44 +1,8 @@
-{% extends "base.html" %}
-{% block title %}
-Game
-{% endblock %}
-{% block body %}
-<center>
-  <p>Agent Name: <strong>{{username}}</strong></p>
-  <p>Target: <strong>{{target}}</strong></p>
-  <hr>
-  <div class="row">
-
-    <div class="col-md-3 col-sm-6">
-      <a href="javascript:void(0);" id="calculate" class="btn btn-primary btn-lg">Send Data</a>
-    </div>
-
-    <div class="col-md-3 col-sm-6">
-      <a href = "/kill" class="btn btn-primary btn-lg btn-danger">Kill</a>
-    </div>
-
-    <div class="col-md-3 col-sm-6">
-      <a href = "/status" class="btn btn-primary btn-lg btn-info">Status</a>
-    </div>
-
-    <div class="col-md-3 col-sm-6">
-      <a href = "/map" class="btn btn-primary btn-lg btn-info">Map</a> 
-    </div>
-
-  </div>
-  <br>
-  Sending data will increase chances of killing your target
-</center>
-<script src="http://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.1-rc2/jquery.js"></script>   
-
-<script type="text/javascript"
-	src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAO3EAgnxm_xkXlf8kccYlLdMYoo0-Vefs">
-</script>
-<div id="map-canvas"></div>
-<script src="../static/index.js">
-</script>
-<script>
     
+var initialLocation;
+var siberia = new google.maps.LatLng(60, 105);
+var newyork = new google.maps.LatLng(40.69847032728747, -73.9514422416687);
+var browserSupportFlag =  new Boolean();
 
 var targetlat = 40;
 var targetlng = -70;
@@ -46,6 +10,11 @@ var mylat = 40;
 var mylng = -70;
 
 var init = function initialize() {
+    var myOptions = {
+        zoom: 6,
+        mapTypeId: google.maps.MapTypeId.ROADMAP
+    };
+    var map = new google.maps.Map(document.getElementById("map-canvas"), myOptions);
 
     if(navigator.geolocation) {
         browserSupportFlag = true;
@@ -53,8 +22,22 @@ var init = function initialize() {
             initialLocation = new google.maps.LatLng(position.coords.latitude,position.coords.longitude);
             mylat = position.coords.latitude;
             mylng = position.coords.longitude;
+            map.setCenter(initialLocation);
 
-            
+            var myLatlng = initialLocation;
+            var myMarker = new google.maps.Marker({
+                position: myLatlng,
+                map: map,
+                title:"Hello World!"
+            });
+
+            var targetLatLng = new google.maps.LatLng(targetlat,targetlng);
+            var targetMarker = new google.maps.Marker({
+                position: targetLatLng,
+                map: map,
+                title:"Hello World!"
+            });
+
         }, function() {
             handleNoGeolocation(browserSupportFlag);
         });
@@ -67,9 +50,12 @@ var init = function initialize() {
     function handleNoGeolocation(errorFlag) {
         if (errorFlag == true) {
             alert("Geolocation service failed.");
+            initialLocation = newyork;
         } else {
             alert("Your browser doesn't support geolocation. We've placed you in Siberia.");
+            initialLocation = siberia;
         }
+        map.setCenter(initialLocation);
     }
 }
 
@@ -100,6 +86,3 @@ window.onLoad = log();
 
 
 
-</script> 
-
-{% endblock body %}
