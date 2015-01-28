@@ -215,6 +215,9 @@ def checkStatus(userid):
         return False
     return False    
 
+def getTargetLat (tid):
+
+def getTargetLong (tid): 
 
 def killCheck(lat1, long1, lat2, long2):
     return (distance (long1, long2) < killDistance)
