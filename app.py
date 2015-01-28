@@ -6,7 +6,13 @@ app = Flask(__name__)
 
 @app.route('/')
 def index():
-    #base.printUsers()
+    print"Game oN?"
+    print base.gameONcheck()
+
+    print "Users"
+    base.printUsers()
+    print "Data"
+    base.printData()
     print base.gameONcheck()
             
     if 'username' in session:
@@ -50,13 +56,9 @@ def login():
                 flash ("You have successfully registered", "success")
                 return redirect(url_for('index'))
             else:
-<<<<<<< HEAD
                 flash("That username is already taken")
                 return  render_template ("login.html")
-=======
-                flash("That username is already taken", "error")
-                return  render_template ("register.html")
->>>>>>> FETCH_HEAD
+
     except:
         pass
     return render_template("login.html")
@@ -90,13 +92,16 @@ def game():
             base.printData()
             uid = base.getID(session['username'])
             tid = base.getTargetID(uid)
-            return render_template ("game.html",
-                                    corner = session['username'],
-                                    username = session['username'], 
-                                    target = base.getName(tid)
-            )
+            if (base.checkStatus(uid)):
+                return render_template ("game.html",
+                                        corner = session['username'],
+                                        username = session['username'], 
+                                        target = base.getName(tid))
+            else:
+                flash ("You have been killed", "error")
+                return redirect (url_for ("index"))
         else:
-            flash("Anathema has yet to begin", "success")
+            flash("Anathema has yet to begin", "error")
             return redirect(url_for("index"))
     else:
         flash("You are not logged in", "error")
@@ -119,9 +124,9 @@ def status ():
             if (u):
                 us = "Alive"
             else:
-                #flash ("Sorry, you have been killed")
-                #return redirect (url_for("index"))
-                us = "Dead"
+                flash ("You have been killed", "error")
+                return redirect (url_for("index"))
+                #us = "Dead"
             
             if (t):
                 ts = "Alive"
@@ -136,7 +141,7 @@ def status ():
                             user_status = us,
                             target_status = ts)
         else: 
-            flash("Anathema has yet to begin", "success")
+            flash("Anathema has yet to begin", "error")
             return redirect(url_for("index"))
     else:
         flash("You are not logged in", "error")
@@ -146,7 +151,6 @@ def status ():
 #killed, reassign
 @app.route('/kill', methods=['GET', 'POST'])
 def kill():
-<<<<<<< HEAD
     if 'username' in session:
         if base.gameONcheck():
             uid = base.getID(session['username'])
@@ -162,33 +166,22 @@ def kill():
             if (base.killCheck (lat1, long1, lat2, long2)):
                 base.kill(tid)
                 if ( base.checkWin(uid)):
-                    flash ("You have won! Congrats!")
+                    flash ("You have won! Congrats!", "success")
                     return redirect (url_for ("switch"))
-=======
-    uid = base.getID(session['username'])
-    tid = base.getTargetID(uid)
-    if (base.killCheck (base.getLat (uid), base.getLong (uid), base.getLat (tid), base.getLong(uid))):
-        base.kill (tid)
-        #if (base.winCheck()):
-        flash ("You have killed your target! You have been assigned another target.", "success")
-    else: 
-        flash ("You have failed to kill your target.", "error")
-    return redirect (url_for ("game"))
->>>>>>> FETCH_HEAD
-
+                
                 else:
                     base.assignTargets()
-                    flash ("You have killed your target! You have been assigned another target.")
+                    flash ("You have killed your target! You have been assigned another target.", "success")
                     return redirect (url_for ("game"))
-
+                    
             else: 
-                flash ("You have failed to kill your target.")
+                flash ("You have failed to kill your target.", "error")
                 return redirect (url_for ("game"))
         else: 
-            flash("Anathema has yet to begin")
+            flash("Anathema has yet to begin", "error")
             return redirect(url_for("index"))
     else:
-        flash("You are not logged in")
+        flash("You are not logged in", "error")
         return redirect(url_for("index"))
     
 
@@ -218,6 +211,8 @@ def target():
 
 @app.route('/restart', methods=['GET', 'POST'])
 def restart():
+    if 'username' in session:
+        session.pop('username', None)
     base.restart()
     base.assignTargets()
     return redirect (url_for ("index"))
