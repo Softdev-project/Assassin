@@ -7,15 +7,10 @@ app = Flask(__name__)
 @app.route('/')
 def index():
     base.printUsers()
-    username = "NOT LOGGED IN"
     if 'username' in session:
-        username = "LOGGED IN AS " + escape(session['username'])
         return render_template ("index.html", 
-                                username = username,
                                 corner = session['username'])
-    return render_template ("index.html", 
-                            username = username,)
-
+    return render_template ("index.html")
 
 @app.route('/logout')
 def logout():
@@ -75,13 +70,12 @@ def settings():
     if 'username' in session:
         try:
             if request.form['submit'] != None:
-                print("HALLELUJAH")
                 if request.form['newpw1'] != request.form['newpw2']:
-                    flash("your passwords don't match")
+                    flash("Your passwords don't match")
                 elif base.updateUser(escape(session['username']), request.form['oldpw'], request.form['newpw1']):
                     flash("Info updated")
                 else:
-                    flash("wrong password")
+                    flash("Incorrect password")
         except:
             pass
     else:
