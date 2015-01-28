@@ -37,7 +37,7 @@ def restart():
         'long':'long1', 
         'tid': 'x',
         'num_click':'0'}
-    switch = {'switch':'1'}
+    switch = {'switch':'0'}
     # 0 = on
     # 1 = off
     db.usertable.insert(account1)
@@ -242,11 +242,11 @@ def updateLat (uid, lat):
             data = {'lat':lat}
             db.datatable.update ({'id':uid}, {"$set": data})
 
-def updateLong (uid, long):
+def updateLong (uid, ulong):
     cres = db.datatable.find()
     for r in cres:
         if (r['id'] == uid):
-            data = {'long':long}
+            data = {'long':ulong}
             db.datatable.update ({'id':uid}, {"$set": data})
 
 
@@ -280,7 +280,7 @@ print"Data"
 printData()
 kill('0')
 print "Test Kill"
-assignTargets()
+#assignTargets()
 printData()
 print "check status"
 print checkStatus ("0")
@@ -290,3 +290,4 @@ print checkStatus ("3")
 print "update lat"
 updateLat ("1", "1lat")
 printData()
+print "RUNNING WEBSITE NOW"

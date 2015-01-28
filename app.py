@@ -6,7 +6,7 @@ app = Flask(__name__)
 
 @app.route('/')
 def index():
-    base.printUsers()
+    #base.printUsers()
     if 'username' in session:
         return render_template ("index.html", 
                                 corner = session['username'])
@@ -14,8 +14,6 @@ def index():
 
 @app.route('/logout')
 def logout():
-    #base.printUsers()
-    # remove the username from the session if it's there
     if 'username' in session:
         session.pop('username', None)
         flash("You have logged out")
@@ -37,10 +35,7 @@ def login():
                 return redirect(url_for('index'))
             else:
                 flash("invalid credentials")
-                #error = "Invalid credentials"
-                return render_template ("login.html"
-                                        #, error = error
-                )
+                return render_template ("login.html")
     except:
         pass
     try:
@@ -54,9 +49,7 @@ def login():
                 return redirect(url_for('index'))
             else:
                 flash("That username is already taken")
-                return  render_template ("register.html"
-                                         #,error = error
-                                     )
+                return  render_template ("register.html")
     except:
         pass
     return render_template("login.html")
@@ -65,8 +58,6 @@ def login():
 @app.route('/settings', methods=['GET', 'POST'])
 def settings():
     base.printUsers()
-    #error = None
-
     if 'username' in session:
         try:
             if request.form['submit'] != None:
@@ -90,9 +81,11 @@ def settings():
 def game():
     if 'username' in session:
         if base.gameONcheck():
+            print "BEFORE UPDATE"
+            base.printData()
             return render_template ("game.html",
                                     corner = session['username'],
-                                    #username
+                                   # username = session['username']
                                     #target
             )
         else:
@@ -105,34 +98,78 @@ def game():
 ##updates locations
 @app.route('/status', methods=['GET', 'POST'])
 def status ():
-    uid = base.getID(session['username'])
-    tid = base.getTargetID(uid)
-    print tid
-    u = base.checkStatus(uid)
-    t = base.checkStatus(tid)
-    print u
-    print t
-    return "hi"
-"""
-    return render_template ("status.html", 
+    if 'username' in session:
+        if base.gameONcheck():
+            print "AFTER UPDATE"
+            base.printData()
+            uid = base.getID(session['username'])
+            tid = base.getTargetID(uid)
+            print tid
+            u = base.checkStatus(uid)
+            t = base.checkStatus(tid)
+            us = ""
+            ts = ""
+            if (u):
+                us = "Alive"
+            else:
+                #flash ("Sorry, you have been killed")
+                #return redirect (url_for("index"))
+                us = "Dead"
+            
+            if (t):
+                ts = "Alive"
+            else:
+                #flash ("Sorry, you have been killed")
+                #return redirect (url_for("index"))
+                ts = "Dead"
+            #print u
+            #print t
+            return render_template ("status.html", 
                             corner = session['username'],
-                            #user_status = get,
-                            #target_status = get
-                        )"""
+                            user_status = us,
+                            target_status = ts)
+        else: 
+            flash("Anathema has yet to begin")
+            return redirect(url_for("index"))
+    else:
+        flash("You are not logged in")
+        return redirect(url_for("index"))
+            
+
 #killed, reassign
 @app.route('/kill', methods=['GET', 'POST'])
 def kill():
-    return render_template ("kill.html", corner = session['username'])
+    uid = base.getID(session['username'])
+    tid = base.getTargetID(uid)
+    if (base.killCheck (base.getLat (uid), base.getLong (uid), base.getLat (tid), base.getLong(uid))):
+        base.kill (tid)
+        #if (base.winCheck()):
+        flash ("You have killed your target! You have been assigned another target.")
+    else: 
+        flash ("You have failed to kill your target.")
+    return redirect (url_for ("game"))
+
 
 @app.route('/map', methods=['GET', 'POST'])
 def map():
+    uid = base.getID(session['username'])
+    tid = base.getTargetID(uid)
     return render_template ("map.html", 
-                            corner = session['username']
-                            #ulat
-                            #ulong
-                            #tlat
-                            #tlong
+                            corner = session['username'],
+                            ulat = base.getLat (uid),
+                            ulong = base.getLong (uid),
+                            tlat = base.getLat (tid),
+                            tlong = base.getLong (tid)
                         )
+
+@app.route('/target', methods=['GET', 'POST'])
+def target():
+    uid = base.getID(session['username'])      
+    mylat = "lat"
+    mylong = "long" ##replace and run
+    base.updateLat (uid, mylat) #will upload into mongo
+    base.updateLong (uid, mylong)
+    return "hi"
 
 @app.route('/restart', methods=['GET', 'POST'])
 def restart():
@@ -141,6 +178,7 @@ def restart():
 @app.route('/switch', methods=['GET', 'POST'])
 def switch():
     if (base.gameON()):
+        print"hi"
         base.assignTargets()
     else:
         base.restart()
