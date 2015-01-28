@@ -2,6 +2,7 @@ Anathema
 ========
 Assassin
 --------
+http://help.wtf.im:1247
 
 Leader: Jessica Ng
 Members: Jason Lu, Nathaniel Brassell, Vanessa Yan
@@ -20,11 +21,21 @@ Nathaniel
 * Nginx
 * Server
 * Mongo/Javascript/Ajax connection
+* Gunicorn
 
 Vanessa
 * Mapping
 * Flask
-* Ajax?
+* CSS
+
+Wish List
+---------
+* Auto updating geolocation
+* No port number on website
+
+Bugs
+----
+* Possible problems with too many games/people
 
 Changelog
 ---------

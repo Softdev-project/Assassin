@@ -64,34 +64,62 @@
 
     <div class="col-md-4 col-md-offset-4 col-xs-12">
       
-      {% with messages = get_flashed_messages() %}
+      {% with messages = get_flashed_messages(category_filter=["error"]) %}
       {% if messages %}
-      <br>
-      {% for message in messages %}
-      
-      
-      <div class="alert alert-success alert-dismissible" role="alert">
-	<button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-	{{ message }}
+      <div class="panel panel-danger">
+	<div class="panel-heading">
+	  <h3 class="panel-title">Error</h3>
+	</div>
+	<div class="panel-body">
+	  {% for message in messages %}
+	  {{ message }}
+	  {% endfor %}
+	</div>
       </div>
-      {% endfor %}
+      {% endif %}
+      {% endwith %}
+      
+      {% with messages = get_flashed_messages(category_filter=["success"]) %}
+      {% if messages %}
+      <div class="panel panel-success">
+	<div class="panel-heading">
+	  <h3 class="panel-title">Success</h3>
+	</div>
+	<div class="panel-body">
+	  {% for message in messages %}
+	  {{ message }}
+	  {% endfor %}
+	</div>
+      </div>
       {% endif %}
       {% endwith %}
     </div>
-    <div class="col-md-10 col-md-offset-1 col-xs-12">
-      <div class="jumbotron">
+    <div clas="row">
+      <div class="col-md-12 col-xs-12">
+	<div class="jumbotron">
 	  <center>
-	      <h2>
-		Anathema
-	      </h2>
-	      <p class="lead">
-		Kill or be killed
-	      </p>
+	    <h2>
+	    Anathema
+	    </h2>
+	    <p class="lead">
+	    Kill or be killed
+	    </p>
 	  </center>
+	</div>
       </div>
-      {% block body %}
-      JUNK BODY HERE THIS SHOULD NOT HAPPEN
-      {% endblock %}
     </div>
+    <br>
+    <div clas="row">
+      <div class="col-md-12 col-xs-12">
+	<div class="jumbotron">
+	  
+	  {% block body %}
+	  JUNK BODY HERE THIS SHOULD NOT HAPPEN
+	  {% endblock %}
+
+	</div>
+      </div>
+    </div>
+    
   </body>
 </html>

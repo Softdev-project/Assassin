@@ -18,40 +18,45 @@ def index():
 def logout():
     if 'username' in session:
         session.pop('username', None)
-        flash("You have logged out")
+        flash("You have logged out", "success")
     else:
-        flash("You are not logged in")
+        flash("You are not logged in", "error")
     return redirect(url_for('index'))
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
     if 'username' in session:
-        flash("You're already logged in as " + escape(session['username']))
+        flash("You're already logged in as " + escape(session['username']), "error")
         return redirect(url_for("index"));
     try:
         if request.form["login"] != None:
             print(request.form['username'])
             if base.validate(request.form['username'], request.form['password']):
                 session['username'] = request.form['username']
-                flash('You were successfully logged in')
+                flash('You were successfully logged in', "success")
                 return redirect(url_for('index'))
             else:
-                flash("invalid credentials")
+                flash("Invalid credentials", "error")
                 return render_template ("login.html")
     except:
         pass
     try:
         if request.form["register"] != None:
             if (request.form["password1"] != request.form["password2"]):
-                flash("Passwords don't match")
+                flash("Passwords don't match", "error")
                 return redirect(url_for("login"))
             if base.addUser(request.form['username'], request.form['password1']):
                 session['username'] = request.form['username']
-                flash ("You have successfully registered")
+                flash ("You have successfully registered", "success")
                 return redirect(url_for('index'))
             else:
+<<<<<<< HEAD
                 flash("That username is already taken")
                 return  render_template ("login.html")
+=======
+                flash("That username is already taken", "error")
+                return  render_template ("register.html")
+>>>>>>> FETCH_HEAD
     except:
         pass
     return render_template("login.html")
@@ -64,20 +69,18 @@ def settings():
         try:
             if request.form['submit'] != None:
                 if request.form['newpw1'] != request.form['newpw2']:
-                    flash("Your passwords don't match")
+                    flash("Your passwords don't match", "error")
                 elif base.updateUser(escape(session['username']), request.form['oldpw'], request.form['newpw1']):
-                    flash("Info updated")
+                    flash("Info updated", "success")
                 else:
-                    flash("Incorrect password")
+                    flash("Incorrect password", "error")
         except:
             pass
     else:
-        flash("You are not logged in")
+        flash("You are not logged in", "error")
         return redirect(url_for("index"))
     return render_template("settings.html", 
                            corner = session['username'])
-                    
-
 
 @app.route('/game', methods=['GET', 'POST'])
 def game():
@@ -93,10 +96,10 @@ def game():
                                     target = base.getName(tid)
             )
         else:
-            flash("Anathema has yet to begin")
+            flash("Anathema has yet to begin", "success")
             return redirect(url_for("index"))
     else:
-        flash("You are not logged in")
+        flash("You are not logged in", "error")
         return redirect(url_for("index"))
 
 ##updates locations
@@ -133,16 +136,17 @@ def status ():
                             user_status = us,
                             target_status = ts)
         else: 
-            flash("Anathema has yet to begin")
+            flash("Anathema has yet to begin", "success")
             return redirect(url_for("index"))
     else:
-        flash("You are not logged in")
+        flash("You are not logged in", "error")
         return redirect(url_for("index"))
             
 
 #killed, reassign
 @app.route('/kill', methods=['GET', 'POST'])
 def kill():
+<<<<<<< HEAD
     if 'username' in session:
         if base.gameONcheck():
             uid = base.getID(session['username'])
@@ -160,6 +164,17 @@ def kill():
                 if ( base.checkWin(uid)):
                     flash ("You have won! Congrats!")
                     return redirect (url_for ("switch"))
+=======
+    uid = base.getID(session['username'])
+    tid = base.getTargetID(uid)
+    if (base.killCheck (base.getLat (uid), base.getLong (uid), base.getLat (tid), base.getLong(uid))):
+        base.kill (tid)
+        #if (base.winCheck()):
+        flash ("You have killed your target! You have been assigned another target.", "success")
+    else: 
+        flash ("You have failed to kill your target.", "error")
+    return redirect (url_for ("game"))
+>>>>>>> FETCH_HEAD
 
                 else:
                     base.assignTargets()
