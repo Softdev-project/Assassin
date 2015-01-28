@@ -212,10 +212,9 @@ def checkStatus(userid):
     for r in cres:
         if (r['id'] == userid):  
             return True
-        return False
     return False    
 
-def getTarget(username):
+def getTargetID(userid):
     cres = db.datatable.find()
     for r in cres:
         if (r['id'] == userid): 
@@ -259,7 +258,7 @@ def kill(userid):
     cres = db.datatable.find({'id':userid})
     for r in cres:
         db.datatable.remove({'id':userid})
-    assignTargets()
+    #assignTargets()
 
 
 restart()
@@ -284,8 +283,10 @@ print "Test Kill"
 assignTargets()
 printData()
 print "check status"
-print checkStatus ("1")
 print checkStatus ("0")
+print checkStatus ("1")
+print checkStatus ("2")
+print checkStatus ("3")
 print "update lat"
-updateLat ("1", "cawmofo")
+updateLat ("1", "1lat")
 printData()
