@@ -99,13 +99,11 @@ See site.
 
 Notes
 -----
-Phonegap
-
-phone orientation (gun?)
-
-Altitude (GMaps)
-
-look up Exo Arena (very similar)
+* Phonegap
+* phone orientation (gun?)
+* Altitude (GMaps)
+* look up Exo Arena (very similar)
+* <a href = "https://www.lucidchart.com/invitations/accept/fcbee2ba-ad71-4424-b337-9f8603afda66">site map</a>
 
 Game Mechanics (not set in stone)
 ------------------------------------
