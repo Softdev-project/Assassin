@@ -2,7 +2,8 @@ Anathema
 ========
 Assassin
 --------
-project: http://help.wtf.im:1247
+project: <strike>http://help.wtf.im:1247</strike>
+http://104.236.107.63:1247/
 
 video: https://vimeo.com/118027405
 
