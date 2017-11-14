@@ -1,7 +1,6 @@
-## Anathema Web App
+# Anathema Web App
 ========
-### Assassin
---------
+## Assassin
 project: <strike>http://help.wtf.im:1247</strike>
  <strike>http://104.236.107.63:1247/ </strike> links are unavailable
 
